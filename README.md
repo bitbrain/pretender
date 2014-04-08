@@ -1,5 +1,4 @@
-Pretender
-=========
+![pretender](logo.png)
 
 My #1GAM April submission, written in Java (LibGDX). The idea for this project came up when I heard about the 'water' theme. It's a different game with very offense mechanics.
 
