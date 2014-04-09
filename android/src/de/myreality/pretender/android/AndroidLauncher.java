@@ -11,8 +11,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		config.useGLSurfaceView20API18 = true;
-		config.numSamples = 10;
 		
 		initialize(new PretenderGame(), config);
 	}

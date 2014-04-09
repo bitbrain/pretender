@@ -25,7 +25,7 @@ const float RADIUS = 0.65;
 const float SOFTNESS = 0.95;
 
 //sepia colour, adjust to taste
-const vec3 SEPIA = vec3(1.6, 0.9, 1.5); 
+const vec3 SEPIA = vec3(1.9, 1.1, 1.6); 
 
 void main() {
  	//sample our texture
@@ -65,9 +65,5 @@ void main() {
     //again we'll use mix so that the sepia effect is at 75%
     texColor.rgb = mix(texColor.rgb, sepiaColor, 0.95);
     
-    vec4 scaledColor = texColor * vec4(0.4, 0.59, 0.51, 1.0);
-    float luminance = scaledColor.r + scaledColor.g + scaledColor.b ;
-    vec4 newColor = vec4( luminance, luminance, luminance, texColor.a);
-    
-    gl_FragColor = color * texColor * newColor;
+    gl_FragColor = color * texColor;
 }

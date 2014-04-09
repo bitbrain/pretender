@@ -7,5 +7,5 @@ public final class Resources {
 	
 	public static final String COLOR_STREET = "555555";
 	public static final String COLOR_STREET_LINES = "cccccc";
-	public static final String COLOR_SKY = "221329";
+	public static final String COLOR_SKY = "323d44";
 }

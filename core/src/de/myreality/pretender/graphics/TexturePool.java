@@ -1,5 +1,6 @@
 package de.myreality.pretender.graphics;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -12,10 +13,14 @@ public class TexturePool {
 	
 	private int textureWidth, textureHeight;
 	
-	public TexturePool(TextureGenerator generator) {
+	private int capacity;
+	
+	public TexturePool(int capacity, TextureGenerator generator) {
+		textures = new HashMap<Integer, Texture>();
 		this.generator = generator;
 		this.textureWidth = 64;
 		this.textureHeight = 64;
+		this.capacity = capacity;
 	}
 	
 	public void setTextureSize(int width, int height) {
@@ -23,7 +28,9 @@ public class TexturePool {
 		this.textureHeight = height;
 	}
 	
-	Texture get(Integer ID) {
+	public Texture get() {
+		
+		Integer ID = (int) (capacity * Math.random());
 		
 		if (textures.containsKey(ID)) {
 			return textures.get(ID);
