@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Pool;
 
@@ -42,7 +43,14 @@ public class Renderer {
 		Collections.sort(targets, comperator);
 		
 		for (RenderTarget target : targets) {
-			target.draw(batch, delta);
+			
+			if (target.getX() < 0 || target.getY() < 0 ||
+				target.getX() > Gdx.graphics.getWidth() ||
+				target.getY() > Gdx.graphics.getHeight()) {
+				remove(target);
+			} else {
+				target.draw(batch, delta);
+			}
 		}
 		
 		while (!removeQueue.isEmpty()) {

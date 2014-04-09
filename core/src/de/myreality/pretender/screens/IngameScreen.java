@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.myreality.pretender.Entity;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.Resources;
+import de.myreality.pretender.VillagerSpawner;
 import de.myreality.pretender.graphics.HouseTextureGenerator;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.StreetTextureGenerator;
@@ -48,6 +49,8 @@ public class IngameScreen implements Screen {
 	
 	private ShaderProgram crtShader;
 	
+	private VillagerSpawner spawner;
+	
 	private long time;
 	
 	public IngameScreen(PretenderGame game) {
@@ -62,6 +65,8 @@ public class IngameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		time += delta + 1;
+		
+		spawner.update(delta);
 		
 		stage.act(delta);
 		camera.update();
@@ -107,7 +112,6 @@ public class IngameScreen implements Screen {
 		pool = Pools.get(Entity.class);
 		renderer = new Renderer(pool);
 		batch = new SpriteBatch();	
-		
 		final int BACKHEIGHT = 150;
 		
 		generateStreet();
@@ -115,7 +119,9 @@ public class IngameScreen implements Screen {
 		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 		
-		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
+		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));		
+
+		spawner = new VillagerSpawner(street, renderer);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useGLSurfaceView20API18 = true;
 		config.numSamples = 10;
+		
 		initialize(new PretenderGame(), config);
 	}
 }

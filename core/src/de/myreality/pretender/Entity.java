@@ -2,6 +2,7 @@ package de.myreality.pretender;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
@@ -19,9 +20,21 @@ public class Entity implements RenderTarget, Poolable {
 	
 	private Texture texture;
 	
+	private Rectangle body;
+	
+	private EntityBehavior behavior;
+	
 	public Entity() {
 		pos = new Vector2();
 		reset();
+	}
+	
+	public void setBody(Rectangle rectangle) {
+		this.body = rectangle;
+	}
+	
+	public boolean collidesWith(Entity other) {
+		return body.contains(other.body) || body.overlaps(other.body);
 	}
 	
 	public int getWidth() {
@@ -30,6 +43,10 @@ public class Entity implements RenderTarget, Poolable {
 	
 	public int getHeight() {
 		return height;
+	}
+	
+	public void setBehavior(EntityBehavior behavior) {
+		this.behavior = behavior;
 	}
 	
 	public void setTexture(Texture texture) {
@@ -64,6 +81,11 @@ public class Entity implements RenderTarget, Poolable {
 
 	@Override
 	public void draw(Batch batch, float delta) {
+		
+		if (behavior != null) {
+			behavior.behave(delta, this);
+		}
+		
 		if (texture != null) {
 			batch.draw(texture, pos.x, pos.y, width, height);
 		}
@@ -86,6 +108,8 @@ public class Entity implements RenderTarget, Poolable {
 		width = 0;
 		height = 0;
 		texture = null;
+		body = new Rectangle();
+		behavior = null;
 	}
 
 }
