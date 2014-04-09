@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 public class HouseTextureGenerator implements TextureGenerator {
 	
 	private static final int WINDOW_WIDTH = 25;
-	private static final int WINDOW_HEIGHT = 30;
-	private static final int PADDING_X = 19;
-	private static final int PADDING_Y = 25;
+	private static final int WINDOW_HEIGHT = 32;
+	private static final int PADDING_X = 29;
+	private static final int PADDING_Y = 32;
 	private static final int ROOF_HEIGHT = 50;
 	
 	@Override
@@ -48,7 +48,7 @@ public class HouseTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getWindowColor(Color houseColor) {
-		return new Color(houseColor.r * 1.4f, houseColor.g * 1.4f, houseColor.b * 1.4f, (float) 1.0);
+		return new Color(houseColor.r + 0.6f, houseColor.g + 0.6f, houseColor.b, (float) 1.0);
 	}
 	
 	private Color getRoofColor(Color houseColor) {

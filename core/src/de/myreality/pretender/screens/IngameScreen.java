@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
@@ -45,8 +46,13 @@ public class IngameScreen implements Screen {
 	
 	private Entity street;
 	
+	private ShaderProgram crtShader;
+	
+	private long time;
+	
 	public IngameScreen(PretenderGame game) {
 		this.game = game;
+		time = 0;
 	}
 
 	@Override
@@ -55,12 +61,22 @@ public class IngameScreen implements Screen {
 		Gdx.gl.glClearColor(SKY.r, SKY.g, SKY.b, SKY.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		time += delta + 1;
+		
 		stage.act(delta);
 		camera.update();
 		
 		batch.setProjectionMatrix(camera.combined);
 		
+		batch.setShader(crtShader);
+		
 		batch.begin();		
+		
+			crtShader.setUniformf("time", time);
+			crtShader.setUniformf("frequency", 100.0f);
+			crtShader.setUniformf("noiseFactor", 0.15f);
+			crtShader.setUniformf("intensity", 1.4f);
+			crtShader.setUniformf("lineSpeed", 12.5f);
 			background.draw(batch);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
@@ -98,6 +114,8 @@ public class IngameScreen implements Screen {
 		
 		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
+		
+		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
 	}
 
 	@Override
