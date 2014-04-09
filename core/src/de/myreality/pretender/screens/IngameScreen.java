@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
@@ -135,27 +136,35 @@ public class IngameScreen implements Screen {
 	void generateForeground() {
 		// Bottom houses
 		TextureGenerator houseTexGenerator = new HouseTextureGenerator();
-		OrthographicCamera cam = new OrthographicCamera();
-		final int OFFSET = 20;
-		final int MAX_HEIGHT = 200;
+		final int OFFSET = 70;
+		final int MIN_HEIGHT = (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight()));
+		final int MAX_HEIGHT = (int) (MIN_HEIGHT + OFFSET);
 		
 		FrameBuffer buffer = new FrameBuffer(Format.RGBA4444, Gdx.graphics.getWidth(), MAX_HEIGHT, false);
-		cam.viewportWidth = buffer.getWidth();
-		cam.viewportHeight = buffer.getHeight();
-		camera.setToOrtho(true);
-		buffer.begin();
 		
-		cam.update();
-		batch.setProjectionMatrix(cam.combined);
+		Matrix4 projectionMatrix = new Matrix4();
+		projectionMatrix.setToOrtho2D(0, 0, buffer.getWidth(), buffer.getHeight());
+
+		batch.setProjectionMatrix(projectionMatrix);
 		
+		buffer.begin();		
 		batch.begin();
-			Texture texture = houseTexGenerator.create(100, 100);
-			batch.draw(texture, 0f, 0f);
+		
+			int offsetX = (int) -(Math.random() * 250);
+			
+			while (offsetX < buffer.getWidth()) {
+				Texture texture = houseTexGenerator.create((int)Math.round(150 + Math.random() * 50), (int)Math.round(MIN_HEIGHT + Math.random() * OFFSET));
+				batch.draw(texture, offsetX, 0f);
+				offsetX += texture.getWidth();
+			}
+			
 		batch.end();
-		batch.flush();
+		batch.flush();		
 		buffer.end();
+		
 		foreground = new Sprite(buffer.getColorBufferTexture());
-		foreground.setY(0);
+
+		foreground.setY(Gdx.graphics.getHeight() - MAX_HEIGHT);
 	}
 
 }
