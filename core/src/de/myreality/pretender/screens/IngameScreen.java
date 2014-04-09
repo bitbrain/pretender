@@ -61,6 +61,7 @@ public class IngameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		batch.begin();		
+			background.draw(batch);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
 		batch.end();
@@ -91,11 +92,12 @@ public class IngameScreen implements Screen {
 		renderer = new Renderer(pool);
 		batch = new SpriteBatch();	
 		
+		final int BACKHEIGHT = 150;
+		
 		generateStreet();
-		generateForeground();
 		
-		
-		
+		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
+		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 	}
 
 	@Override
@@ -133,11 +135,11 @@ public class IngameScreen implements Screen {
 		street.setY(Gdx.graphics.getHeight() * STREET_POS);
 	}
 	
-	void generateForeground() {
+	Sprite generateHouseRow(float y, int height) {
 		// Bottom houses
 		TextureGenerator houseTexGenerator = new HouseTextureGenerator();
 		final int OFFSET = 70;
-		final int MIN_HEIGHT = (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight()));
+		final int MIN_HEIGHT = (int) (Gdx.graphics.getHeight() - (height));
 		final int MAX_HEIGHT = (int) (MIN_HEIGHT + OFFSET);
 		
 		FrameBuffer buffer = new FrameBuffer(Format.RGBA4444, Gdx.graphics.getWidth(), MAX_HEIGHT, false);
@@ -162,9 +164,9 @@ public class IngameScreen implements Screen {
 		batch.flush();		
 		buffer.end();
 		
-		foreground = new Sprite(buffer.getColorBufferTexture());
-
-		foreground.setY(Gdx.graphics.getHeight() - MAX_HEIGHT);
+		Sprite s = new Sprite(buffer.getColorBufferTexture());
+		s.setY(y - OFFSET);
+		return s;
 	}
 
 }

@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class HouseTextureGenerator implements TextureGenerator {
 	
-	private static final int WINDOW_WIDTH = 20;
-	private static final int WINDOW_HEIGHT = 20;
-	private static final int PADDING_X = 15;
-	private static final int PADDING_Y = 18;
+	private static final int WINDOW_WIDTH = 25;
+	private static final int WINDOW_HEIGHT = 30;
+	private static final int PADDING_X = 19;
+	private static final int PADDING_Y = 22;
 	private static final int ROOF_HEIGHT = 50;
 	
 	@Override
@@ -29,7 +29,7 @@ public class HouseTextureGenerator implements TextureGenerator {
 		Color windowColor = getWindowColor(houseColor);
 		map.setColor(windowColor);
 		
-		final int INTERN_OFFSET_X = Math.abs(width - (WINDOWS_X * WINDOW_WIDTH + WINDOWS_X * PADDING_X));
+		final int INTERN_OFFSET_X = Math.round((width - (WINDOWS_X * (WINDOW_WIDTH + PADDING_X)) + PADDING_X) / 2f);
 		final int INTERN_OFFSET_Y = ROOF_HEIGHT + 10;
 		for (int y = 0; y < WINDOWS_Y; ++y) {
 			for (int x = 0; x < WINDOWS_X; ++x) {
