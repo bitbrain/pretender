@@ -27,11 +27,13 @@ public class StreetTextureGenerator implements TextureGenerator {
 		
 		while (offset < width) {
 			
-			map.fillRectangle(offset, (height / 2 - LINE_HEIGHT / 2), LINE_WIDTH, LINE_HEIGHT);
+			map.fillRectangle(offset, (height / 2 - LINE_HEIGHT / 2) - 20, LINE_WIDTH, LINE_HEIGHT);
 			
 			offset += LINE_WIDTH + LINE_SPACING;
 		}
 			 
+		map.setColor(Color.valueOf("888888"));
+		map.fillRectangle(0, height - height / 6, width, height / 6);
 		
 		Texture texture = new Texture(map);
 		map.dispose();
