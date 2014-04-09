@@ -16,7 +16,7 @@ public class HouseTextureGenerator implements TextureGenerator {
 	@Override
 	public Texture create(int width, int height) {
 		
-		Pixmap map = new Pixmap(width, height, Format.RGB888);
+		Pixmap map = new Pixmap(width, height, Format.RGBA8888);
 		
 		Color houseColor = getRandomHouseColor();
 		map.setColor(houseColor);

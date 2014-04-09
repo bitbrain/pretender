@@ -15,6 +15,8 @@ import de.myreality.pretender.Entity;
 
 public class Renderer {
 	
+	private static final float SORT_INTERVAL = 0.1f;
+	
 	private Queue<RenderTarget> removeQueue;
 	
 	private List<RenderTarget> targets;
@@ -23,15 +25,19 @@ public class Renderer {
 	
 	private Pool<Entity> pool;
 	
+	private float time;
+	
 	public Renderer(Pool<Entity> pool) {
 		targets = new ArrayList<RenderTarget>();
 		removeQueue = new LinkedList<RenderTarget>();
 		comperator = new RenderTargetComperator();
 		this.pool = pool;
+		time = 0;
 	}
 	
 	public void add(RenderTarget target) {
 		targets.add(target);
+		Collections.sort(targets, comperator);
 	}
 	
 	public void remove(RenderTarget target) {
@@ -40,7 +46,12 @@ public class Renderer {
 
 	public void render(Batch batch, float delta) {
 		
-		Collections.sort(targets, comperator);
+		time += delta;
+		
+		if (time >= SORT_INTERVAL) {
+			time = time - SORT_INTERVAL;
+			Collections.sort(targets, comperator);
+		}
 		
 		for (RenderTarget target : targets) {
 			
