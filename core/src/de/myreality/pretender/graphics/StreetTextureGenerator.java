@@ -1,6 +1,5 @@
 package de.myreality.pretender.graphics;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -10,7 +9,7 @@ import de.myreality.pretender.Resources;
 
 public class StreetTextureGenerator implements TextureGenerator {
 	
-	private static final int LINE_HEIGHT = 8;
+	private static final int LINE_HEIGHT = 10;
 	private static final int LINE_WIDTH = 50;
 	private static final int LINE_SPACING = 30;
 	

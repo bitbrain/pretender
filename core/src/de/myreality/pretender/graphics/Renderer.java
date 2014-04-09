@@ -60,7 +60,7 @@ public class Renderer {
 
 		@Override
 		public int compare(RenderTarget targetA, RenderTarget targetB) {			
-			return Math.round(targetB.getY() - targetB.getY());
+			return Math.round(targetB.getY() - targetA.getY());
 		}
 		
 	}

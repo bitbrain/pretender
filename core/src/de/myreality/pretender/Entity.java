@@ -59,7 +59,7 @@ public class Entity implements RenderTarget, Poolable {
 	}
 	
 	public void setY(float y) {
-		pos.x = y;
+		pos.y = y;
 	}
 
 	@Override
