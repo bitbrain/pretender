@@ -1,8 +1,8 @@
 package de.myreality.pretender.graphics;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.Texture;
 
 public interface TextureGenerator {
 
-	Image create(int width, int height);
+	Texture create(int width, int height);
 }
