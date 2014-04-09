@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.myreality.pretender.Entity;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.graphics.Renderer;
+import de.myreality.pretender.graphics.StreetTextureGenerator;
+import de.myreality.pretender.graphics.TextureGenerator;
 
 public class IngameScreen implements Screen {
 	
@@ -40,6 +42,9 @@ public class IngameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
+		camera.update();
+		
+		batch.setProjectionMatrix(camera.combined);
 		
 		batch.begin();
 			renderer.render(batch, delta);
@@ -65,9 +70,16 @@ public class IngameScreen implements Screen {
 
 	@Override
 	public void show() {
+		
 		pool = Pools.get(Entity.class);
 		renderer = new Renderer(pool);
-		batch = new SpriteBatch();
+		batch = new SpriteBatch();		
+		
+		Entity street = pool.obtain();
+		renderer.add(street);
+		TextureGenerator strTexGenerator = new StreetTextureGenerator();
+		street.setTexture(strTexGenerator.create(Gdx.graphics.getWidth(), 300));
+		street.setDimensions(Gdx.graphics.getWidth(), 300);
 	}
 
 	@Override

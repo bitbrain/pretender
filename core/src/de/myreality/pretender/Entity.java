@@ -32,7 +32,7 @@ public class Entity implements RenderTarget, Poolable {
 		return height;
 	}
 	
-	void setTexture(Texture texture) {
+	public void setTexture(Texture texture) {
 		this.texture = texture;
 	}
 	
