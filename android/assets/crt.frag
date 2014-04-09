@@ -19,13 +19,13 @@ float rand(vec2 co, float time){
 }
 
 //RADIUS of our vignette, where 0.5 results in a circle fitting the screen
-const float RADIUS = 0.65;
+const float RADIUS = 1.0f;
 
 //softness of our vignette, between 0.0 and 1.0
 const float SOFTNESS = 0.95;
 
 //sepia colour, adjust to taste
-const vec3 SEPIA = vec3(1.9, 1.1, 1.6); 
+const vec3 SEPIA = vec3(1.4, 0.9, 0.8); 
 
 void main() {
  	//sample our texture

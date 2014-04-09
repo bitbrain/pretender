@@ -51,6 +51,8 @@ public class IngameScreen implements Screen {
 	
 	private VillagerSpawner spawner;
 	
+	private FrameBuffer buffer;
+	
 	private long time;
 	
 	public IngameScreen(PretenderGame game) {
@@ -73,20 +75,27 @@ public class IngameScreen implements Screen {
 		
 		batch.setProjectionMatrix(camera.combined);
 		
-		batch.setShader(crtShader);
+		batch.setShader(null);
 		
+		buffer.begin();
 		batch.begin();		
-		
-			crtShader.setUniformf("time", time);
-			crtShader.setUniformf("frequency", 100.0f);
-			crtShader.setUniformf("noiseFactor", 0.15f);
-			crtShader.setUniformf("intensity", 1.4f);
-			crtShader.setUniformf("lineSpeed", 12.5f);
 			background.draw(batch);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
 		batch.end();
+		batch.flush();
+		buffer.end();
 		
+		batch.setShader(crtShader);
+		
+		batch.begin();		
+			crtShader.setUniformf("time", time);
+			crtShader.setUniformf("frequency", 100.0f);
+			crtShader.setUniformf("noiseFactor", 0.2f);
+			crtShader.setUniformf("intensity", 1.6f);
+			crtShader.setUniformf("lineSpeed", 12.5f);
+			batch.draw(buffer.getColorBufferTexture(), 0f, 0f);
+		batch.end();
 		
 		stage.draw();
 	}
@@ -102,11 +111,16 @@ public class IngameScreen implements Screen {
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
 		stage.setViewport(new FitViewport(width, height));
+
+		if (buffer != null) {
+			buffer.dispose();
+		}
+		
+		buffer = new FrameBuffer(Format.RGBA8888, width, height, false);
 	}
 
 	@Override
 	public void show() {
-
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());			
 		camera.setToOrtho(true);
 		pool = Pools.get(Entity.class);
