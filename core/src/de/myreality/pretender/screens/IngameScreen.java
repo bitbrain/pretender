@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import de.myreality.pretender.Entity;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.graphics.Renderer;
 
@@ -24,6 +27,8 @@ public class IngameScreen implements Screen {
 	
 	private Batch batch;
 	
+	private Pool<Entity> pool;
+	
 	public IngameScreen(PretenderGame game) {
 		this.game = game;
 	}
@@ -31,7 +36,7 @@ public class IngameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		
-		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
@@ -60,7 +65,8 @@ public class IngameScreen implements Screen {
 
 	@Override
 	public void show() {
-		renderer = new Renderer();
+		pool = Pools.get(Entity.class);
+		renderer = new Renderer(pool);
 		batch = new SpriteBatch();
 	}
 

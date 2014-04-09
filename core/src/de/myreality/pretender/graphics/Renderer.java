@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Pool;
+
+import de.myreality.pretender.Entity;
 
 public class Renderer {
 	
@@ -17,10 +20,13 @@ public class Renderer {
 	
 	private RenderTargetComperator comperator;
 	
-	public Renderer() {
+	private Pool<Entity> pool;
+	
+	public Renderer(Pool<Entity> pool) {
 		targets = new ArrayList<RenderTarget>();
 		removeQueue = new LinkedList<RenderTarget>();
 		comperator = new RenderTargetComperator();
+		this.pool = pool;
 	}
 	
 	public void add(RenderTarget target) {
@@ -42,6 +48,10 @@ public class Renderer {
 		while (!removeQueue.isEmpty()) {
 			RenderTarget target = removeQueue.poll();
 			targets.remove(target);
+			
+			if (target instanceof Entity) {
+				pool.free((Entity)target);
+			}
 		}
 	}
 
