@@ -7,8 +7,8 @@ public final class Resources {
 	
 	public static final String COLOR_STREET = "555555";
 	public static final String COLOR_STREET_LINES = "cccccc";
-	public static final String COLOR_SKY = "53d0ff";
+	public static final String COLOR_SKY = "0084ff";
 	
-	public static final String COLOR_NIGHT = "6a3cb7";
-	public static final String COLOR_DAY = "fff0c4";
+	public static final String COLOR_NIGHT = "7a41b0";
+	public static final String COLOR_DAY = "e09c3a";
 }

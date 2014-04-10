@@ -37,7 +37,7 @@ public class IngameScreen implements Screen {
 	
 	private static final Color SKY = Color.valueOf(Resources.COLOR_SKY);
 	
-	private static final float DAY_DURATION = 10f;
+	private static final float DAY_DURATION = 60f;
 	
 	private PretenderGame game;
 	
@@ -159,17 +159,17 @@ public class IngameScreen implements Screen {
 		// Do day night cycle
 		Tween.to(ambientColor, ColorTween.R, DAY_DURATION / 2)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).r)
-			 .ease(TweenEquations.easeOutCubic)
+			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
 		Tween.to(ambientColor, ColorTween.G, DAY_DURATION / 2)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).g)
-			 .ease(TweenEquations.easeOutCubic)
+			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
 		Tween.to(ambientColor, ColorTween.B, DAY_DURATION / 2)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).b)
-			 .ease(TweenEquations.easeOutCubic)
+			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
 	}

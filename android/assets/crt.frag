@@ -22,7 +22,7 @@ float rand(vec2 co, float time){
 }
 
 //RADIUS of our vignette, where 0.5 results in a circle fitting the screen
-const float RADIUS = 1.0f;
+const float RADIUS = 0.7f;
 
 //softness of our vignette, between 0.0 and 1.0
 const float SOFTNESS = 0.95;
@@ -48,23 +48,29 @@ void main() {
 
     //use smoothstep to create a smooth vignette
     float vignette = smoothstep(RADIUS, RADIUS-SOFTNESS, len);
+    
+    vec4 windowColor = texColor;
 
     //apply the vignette with 50% opacity
-    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 0.5);
+    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 1.3f - ambient.r);
     
      //2. GRAYSCALE
 
     //convert to grayscale using NTSC conversion weights
-    float gray = dot(texColor.rgb, vec3(0.299, 0.187, 0.114));
+    float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
 
     //3. SEPIA
 
     //create our sepia tone from some constant value
-    vec3 sepiaColor =  mix(vec3(gray), (ambient * 4), 0.2f);
+    vec3 sepiaColor =  (3 * ambient) * gray;
 
     //again we'll use mix so that the sepia effect is at 75%
-    texColor.rgb = mix(texColor.rgb, sepiaColor, 0.45);
+    texColor.rgb = mix(texColor.rgb, sepiaColor, 0.85);     
     
+    if (windowColor.r > 0.9 || windowColor.g > 0.9) 
+    {
+    	texColor.rgb = windowColor.rgb;
+    }   
     
     gl_FragColor = color * texColor;
 }
