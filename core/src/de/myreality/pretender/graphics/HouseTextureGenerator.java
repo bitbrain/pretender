@@ -49,8 +49,8 @@ public class HouseTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getWindowColor(Color houseColor) {
-		float yellow = (float) (0.4f + Math.random() * 0.2f);
-		return new Color(houseColor.r + yellow, houseColor.g + yellow, houseColor.b, (float) 1.0);
+		float yellow = Math.random() < 0.90f ? 0.5f : 0.0f;
+		return new Color(houseColor.r + yellow - 0.05f, houseColor.g + yellow - 0.05f, houseColor.b - 0.05f, (float) 1.0);
 	}
 	
 	private Color getRoofColor(Color houseColor) {

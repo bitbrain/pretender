@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,8 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
@@ -45,7 +44,7 @@ public class IngameScreen implements Screen {
 	
 	private Pool<Entity> pool;
 	
-	private Sprite foreground, background;
+	private Sprite foreground, background, sky;
 	
 	private Entity street;
 	
@@ -64,7 +63,6 @@ public class IngameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		
 		Gdx.gl.glClearColor(SKY.r, SKY.g, SKY.b, SKY.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -81,6 +79,7 @@ public class IngameScreen implements Screen {
 
 		buffer.begin();
 		batch.begin();	
+			sky.draw(batch);
 			background.draw(batch);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
@@ -129,14 +128,14 @@ public class IngameScreen implements Screen {
 		renderer = new Renderer(pool);
 		batch = new SpriteBatch();	
 		final int BACKHEIGHT = 150;
-		
+
 		generateStreet();
+		generateSky();
 		
 		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 		
-		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));		
-
+		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
 		spawner = new VillagerSpawner(street, renderer);
 	}
 
@@ -161,6 +160,15 @@ public class IngameScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+	
+	void generateSky() {
+		Pixmap skyMap = new Pixmap(50, 50, Format.RGB888);
+		skyMap.setColor(Color.valueOf(Resources.COLOR_SKY));
+		skyMap.fill();
+		sky = new Sprite(new Texture(skyMap));
+		skyMap.dispose();
+		sky.setBounds(0, 0, Gdx.graphics.getWidth(), street.getY());
 	}
 	
 	void generateStreet() {

@@ -78,10 +78,7 @@ public class VillagerSpawner {
 		@Override
 		public void behave(float delta, Entity entity) {
 			float randSpeed = (float) (Math.random() * 20.0f);
-			if (Math.random() < 0.5)
-				entity.setX((float)Math.floor((entity.getX() - (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
-			else
-				entity.setX((float)Math.floor((entity.getX() + (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
+			entity.setX((float)Math.floor((entity.getX() - (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
 		}
 		
 	}
