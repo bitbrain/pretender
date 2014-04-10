@@ -55,14 +55,16 @@ public class Renderer {
 		
 		for (RenderTarget target : targets) {
 			
-			if (target.getBody().getX() + target.getBody().getWidth() < 0 || target.getBody().getY() + target.getBody().getHeight() < 0 ||
-				target.getBody().getX() > Gdx.graphics.getWidth() ||
-				target.getBody().getY() > Gdx.graphics.getHeight()) {
+			if (target.getX() + target.getBody().getWidth() < 0 || target.getY() + target.getBody().getHeight() < 0 ||
+				target.getX() > Gdx.graphics.getWidth() ||
+				target.getY() > Gdx.graphics.getHeight()) {
 				remove(target);
 			} else {
 				target.draw(batch, delta);
 			}
 		}
+		
+		System.out.println(targets.size() + ", " + removeQueue.size());
 		
 		while (!removeQueue.isEmpty()) {
 			RenderTarget target = removeQueue.poll();
@@ -78,8 +80,17 @@ public class Renderer {
 	class RenderTargetComperator implements Comparator<RenderTarget> {
 
 		@Override
-		public int compare(RenderTarget targetA, RenderTarget targetB) {			
-			return Math.round((targetA.getY() + targetA.getBody().getY()) - (targetB.getY() + targetB.getBody().getY()));
+		public int compare(RenderTarget targetA, RenderTarget targetB) {		
+			
+			float value = (targetA.getY() + targetA.getBody().getY()) - (targetB.getY() + targetB.getBody().getY());
+			
+			if (value < 0) {
+				return -1;
+			} else if (value > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 		
 	}

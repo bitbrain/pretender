@@ -7,6 +7,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -37,7 +38,7 @@ public class IngameScreen implements Screen {
 	
 	private static final Color SKY = Color.valueOf(Resources.COLOR_SKY);
 	
-	private static final float DAY_DURATION = 60f;
+	private static final float DAY_DURATION = 20f;
 	
 	private PretenderGame game;
 	
@@ -67,6 +68,8 @@ public class IngameScreen implements Screen {
 	
 	private TweenManager tweenManager;
 	
+	FPSLogger logger = new FPSLogger();
+	
 	public IngameScreen(PretenderGame game) {
 		this.game = game;
 		time = 0;
@@ -81,7 +84,7 @@ public class IngameScreen implements Screen {
 		time += delta + 1;
 		
 		spawner.update(delta);
-		
+
 		tweenManager.update(delta);
 		stage.act(delta);
 		camera.update();
@@ -115,6 +118,8 @@ public class IngameScreen implements Screen {
 		batch.end();
 		
 		stage.draw();
+		
+		logger.log();
 	}
 
 	@Override
