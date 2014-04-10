@@ -6,15 +6,17 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
+import de.myreality.pretender.graphics.DefaultRenderStrategy;
+import de.myreality.pretender.graphics.RenderStrategy;
 import de.myreality.pretender.graphics.RenderTarget;
 
 public class Entity implements RenderTarget, Poolable {
 	
-	public static enum EntityType {		
-		STREET, HOUSE, PROTESTER, POLICE, TRUCK;
+	public static enum Direction {
+		LEFT, RIGHT, NONE
 	}
 	
-	private Vector2 pos;
+	private Vector2 pos, lastPos;
 	
 	private int width, height;
 	
@@ -22,10 +24,15 @@ public class Entity implements RenderTarget, Poolable {
 	
 	private Rectangle body;
 	
+	private RenderStrategy renderStrategy;
+	
 	private EntityBehavior behavior;
+	
+	private Direction direction;
 	
 	public Entity() {
 		pos = new Vector2();
+		lastPos = new Vector2();
 		reset();
 	}
 	
@@ -35,6 +42,10 @@ public class Entity implements RenderTarget, Poolable {
 	
 	public boolean collidesWith(Entity other) {
 		return body.contains(other.body) || body.overlaps(other.body);
+	}
+	
+	public Direction getDirection() {
+		return direction;
 	}
 	
 	public int getWidth() {
@@ -72,10 +83,21 @@ public class Entity implements RenderTarget, Poolable {
 	}
 	
 	public void setX(float x) {
+		
+		if (x < pos.x) {
+			direction = Direction.LEFT;
+		} else if (x > pos.x) {
+			direction = Direction.RIGHT;
+		} else {
+			direction = Direction.NONE;
+		}
+		
+		lastPos.x = pos.x;
 		pos.x = x;
 	}
 	
 	public void setY(float y) {
+		lastPos.y = pos.y;
 		pos.y = y;
 	}
 
@@ -86,9 +108,13 @@ public class Entity implements RenderTarget, Poolable {
 			behavior.behave(delta, this);
 		}
 		
-		if (texture != null) {
-			batch.draw(texture, pos.x, pos.y, width, height);
+		if (texture != null && renderStrategy != null) {
+			renderStrategy.render(texture, batch, delta, this);
 		}
+	}
+	
+	public boolean isMoving() {
+		return lastPos.x != pos.x || lastPos.y != pos.y;
 	}
 
 	@Override
@@ -105,11 +131,14 @@ public class Entity implements RenderTarget, Poolable {
 	public void reset() {
 		pos.x = 0;
 		pos.y = 0;
+		lastPos.x = 0;
+		lastPos.y = 0;
 		width = 0;
 		height = 0;
 		texture = null;
 		body = new Rectangle();
 		behavior = null;
+		renderStrategy = new DefaultRenderStrategy();
+		direction = Direction.NONE;
 	}
-
 }
