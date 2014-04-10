@@ -1,5 +1,7 @@
 package de.myreality.pretender;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.utils.Pool;
@@ -9,6 +11,7 @@ import de.myreality.pretender.graphics.RenderAnimationStrategy;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.TexturePool;
 import de.myreality.pretender.graphics.VillagerTextureGenerator;
+import de.myreality.pretender.tweens.EntityTween;
 
 public class VillagerSpawner {
 	
@@ -70,21 +73,34 @@ public class VillagerSpawner {
 		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
 		
 		villager.setTexture(texturePool.get());
-		villager.setRenderStrategy(new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION));
-		villager.setBehavior(new VillagerBehavior());		
+		RenderAnimationStrategy str = new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION);
+		villager.setRenderStrategy(str);
+		villager.setBehavior(new VillagerBehavior(str));		
 		renderer.add(villager);
 	}
 	
 	
 	class VillagerBehavior implements EntityBehavior {
 		
-		private float timeStamp = (float) (Math.random() * 1000.0f);
+		private RenderAnimationStrategy strategy;
+		
+		private float delay;
+		
+		public VillagerBehavior(RenderAnimationStrategy strategy) {
+			this.strategy = strategy;
+			delay = strategy.getInitialDelay();
+		}
 
 		@Override
 		public void behave(float delta, Entity entity) {
 			if (!tweenManager.containsTarget(entity)) {
 				
-				
+				Tween.to(entity, EntityTween.POS_X, FRAME_DURATION)
+					.target(entity.getX() - 15.0f)
+					.delay(delay)
+					.ease(TweenEquations.easeInQuad)
+					.start(tweenManager);
+				delay = 0f;
 			}
 		}
 		

@@ -18,15 +18,22 @@ public class RenderAnimationStrategy implements RenderStrategy {
 	
 	private float time;
 	
+	private float initialDelay;
+	
 	private int tileWidth, tileHeight;
 	
 	private float frameDuration;
 	
 	public RenderAnimationStrategy(int tileWidth, int tileHeight, float frameDuration) {
-		time = (float) (Math.random() * frameDuration);
+		initialDelay = (float) (Math.random() * frameDuration);
+		time = initialDelay;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
 		this.frameDuration = frameDuration;
+	}
+	
+	public float getInitialDelay() {
+		return initialDelay;
 	}
 
 	@Override
