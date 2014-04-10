@@ -14,21 +14,15 @@ import de.myreality.pretender.Entity.Direction;
 
 public class RenderAnimationStrategy implements RenderStrategy {
 	
-	private Map<Direction, Animation> movingAnimations;
-	private Map<Direction, Animation> idleAnimations;
+	private Animation movingAnimation, idleAnimation;
 	
 	private float time;
-	
-	private DefaultRenderStrategy defaultRenderStrategy;
 	
 	private int tileWidth, tileHeight;
 	
 	private float frameDuration;
 	
 	public RenderAnimationStrategy(int tileWidth, int tileHeight, float frameDuration) {
-		movingAnimations = new HashMap<Direction, Animation>();
-		idleAnimations = new HashMap<Direction, Animation>();
-		defaultRenderStrategy = new DefaultRenderStrategy();
 		time = (float) (Math.random() * frameDuration);
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
@@ -40,33 +34,31 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		
 		time += delta + 1;
 		
+		if (movingAnimation == null || idleAnimation == null) {
+			initAnimations(texture);
+		}
+		
 		Animation animation = null;
 		
 		if (entity.isMoving()) {
-			
-			if (movingAnimations.isEmpty()) {
-				fillAnimations(texture, movingAnimations, 1);
-			}
-			
-			animation = movingAnimations.get(entity.getDirection());
+			animation = movingAnimation;
 		} else {
-			
-			if (idleAnimations.isEmpty()) {
-				fillAnimations(texture, idleAnimations, 0);
-			}
-			
-			animation = idleAnimations.get(entity.getDirection());
+			animation = idleAnimation;
 		}
 		
-		batch.draw(animation.getKeyFrame(time), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
+		if (entity.getDirection() == Direction.RIGHT) {
+			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getWidth(), entity.getY(), -entity.getWidth(), entity.getHeight());
+		} else {
+			batch.draw(animation.getKeyFrame(time), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
+		}
 	}
 	
-	private void fillAnimations(Texture texture, Map<Direction, Animation> map, int row) {
+	private void initAnimations(Texture texture) {
 		TextureRegion[][] regions = TextureRegion.split(texture, tileWidth, tileHeight);
-		map.put(Direction.LEFT, new Animation(frameDuration, regions[row][0], regions[row][1]));
-		map.put(Direction.RIGHT, new Animation(frameDuration, regions[row][2], regions[row][3]));
-		map.get(Direction.LEFT).setPlayMode(PlayMode.LOOP);
-		map.get(Direction.RIGHT).setPlayMode(PlayMode.LOOP);
+		idleAnimation = new Animation(frameDuration, regions[0][0], regions[0][1]);
+		movingAnimation = new Animation(frameDuration, regions[1][0], regions[1][1]);
+		idleAnimation.setPlayMode(PlayMode.LOOP);
+		movingAnimation.setPlayMode(PlayMode.LOOP);
 	}
 
 }

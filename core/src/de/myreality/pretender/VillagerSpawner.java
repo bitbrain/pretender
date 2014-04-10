@@ -35,7 +35,7 @@ public class VillagerSpawner {
 		this.renderer = renderer;
 		
 		texturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
-		texturePool.setTextureSize(VILLAGER_WIDTH * 4, VILLAGER_HEIGHT * 2);
+		texturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
 		
 		entityPool = Pools.get(Entity.class);
 		
@@ -78,7 +78,10 @@ public class VillagerSpawner {
 		@Override
 		public void behave(float delta, Entity entity) {
 			float randSpeed = (float) (Math.random() * 20.0f);
-			entity.setX((float)Math.floor((entity.getX() - (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
+			if (Math.random() < 0.5)
+				entity.setX((float)Math.floor((entity.getX() - (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
+			else
+				entity.setX((float)Math.floor((entity.getX() + (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
 		}
 		
 	}

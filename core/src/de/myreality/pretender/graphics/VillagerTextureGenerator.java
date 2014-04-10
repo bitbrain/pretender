@@ -56,13 +56,15 @@ public class VillagerTextureGenerator implements TextureGenerator {
 
 	private void generateIdle(Pixmap map, Color skinColor, Color hairColor, Color shoeColor, Color trousesColor, Color shirtColor) {		
 		
-		final int w = map.getWidth() / 4;
+		final int w = map.getWidth() / 2;
 		final int h = map.getHeight() / 2;
 		
 		for (int y = 0; y < map.getHeight(); y += h) {
 			for (int x = 0; x < map.getWidth(); x += w) {
 				map.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(),1f));
 				map.fillRectangle(x, y, w, h);
+				map.setColor(Color.ORANGE);
+				map.fillRectangle(x, y, 5, 5);
 			}
 		}
 	}

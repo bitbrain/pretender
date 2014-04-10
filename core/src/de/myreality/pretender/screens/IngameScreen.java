@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
@@ -76,9 +78,9 @@ public class IngameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		batch.setShader(null);
-		
+
 		buffer.begin();
-		batch.begin();		
+		batch.begin();	
 			background.draw(batch);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
@@ -177,7 +179,7 @@ public class IngameScreen implements Screen {
 		// Bottom houses
 		TextureGenerator houseTexGenerator = new HouseTextureGenerator();
 		final int OFFSET = 70;
-		final int MIN_HEIGHT = (int) (Gdx.graphics.getHeight() - (height));
+		final int MIN_HEIGHT = (int) (height);
 		final int MAX_HEIGHT = (int) (MIN_HEIGHT + OFFSET);
 		
 		FrameBuffer buffer = new FrameBuffer(Format.RGBA4444, Gdx.graphics.getWidth(), MAX_HEIGHT, false);

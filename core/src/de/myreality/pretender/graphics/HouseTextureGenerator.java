@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class HouseTextureGenerator implements TextureGenerator {
 	
-	private static final int WINDOW_WIDTH = 25;
-	private static final int WINDOW_HEIGHT = 32;
-	private static final int PADDING_X = 29;
-	private static final int PADDING_Y = 32;
-	private static final int ROOF_HEIGHT = 50;
+	private static final int WINDOW_WIDTH = 15;
+	private static final int WINDOW_HEIGHT = 22;
+	private static final int PADDING_X = 15;
+	private static final int PADDING_Y = 22;
+	private static final int ROOF_HEIGHT = 40;
 	
 	@Override
 	public Texture create(int width, int height) {
@@ -24,16 +24,17 @@ public class HouseTextureGenerator implements TextureGenerator {
 		
 		// Calculate possible window amount
 		final int WINDOWS_X = (int) (Math.floor(width / (float)(WINDOW_WIDTH + PADDING_X)));
-		final int WINDOWS_Y = (int) (Math.floor((height - ROOF_HEIGHT) / (float)(WINDOW_HEIGHT + PADDING_Y)) - 1);
+		final int WINDOWS_Y = (int) (Math.floor((height - ROOF_HEIGHT) / (float)(WINDOW_HEIGHT + PADDING_Y)));
 		
-		Color windowColor = getWindowColor(houseColor);
-		map.setColor(windowColor);
+		
 		
 		final int INTERN_OFFSET_X = Math.round((width - (WINDOWS_X * (WINDOW_WIDTH + PADDING_X)) + PADDING_X) / 2f);
 		final int INTERN_OFFSET_Y = Math.round(((height - ROOF_HEIGHT) - (WINDOWS_Y * (WINDOW_HEIGHT + PADDING_Y)) + PADDING_Y) / 2f);
 		for (int y = 0; y < WINDOWS_Y; ++y) {
 			for (int x = 0; x < WINDOWS_X; ++x) {
-				map.fillRectangle(INTERN_OFFSET_X + x * (WINDOW_WIDTH + PADDING_X), (ROOF_HEIGHT / 2) + INTERN_OFFSET_Y + y * (WINDOW_HEIGHT + PADDING_Y), WINDOW_WIDTH, WINDOW_HEIGHT);
+				Color windowColor = getWindowColor(houseColor);
+				map.setColor(windowColor);
+				map.fillRectangle(INTERN_OFFSET_X + x * (WINDOW_WIDTH + PADDING_X), (ROOF_HEIGHT) + INTERN_OFFSET_Y + y * (WINDOW_HEIGHT + PADDING_Y), WINDOW_WIDTH, WINDOW_HEIGHT);
 			}
 		}
 		
@@ -48,7 +49,8 @@ public class HouseTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getWindowColor(Color houseColor) {
-		return new Color(houseColor.r + 0.6f, houseColor.g + 0.6f, houseColor.b, (float) 1.0);
+		float yellow = (float) (0.4f + Math.random() * 0.2f);
+		return new Color(houseColor.r + yellow, houseColor.g + yellow, houseColor.b, (float) 1.0);
 	}
 	
 	private Color getRoofColor(Color houseColor) {
