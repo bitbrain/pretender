@@ -10,15 +10,15 @@ import de.myreality.pretender.graphics.VillagerTextureGenerator;
 
 public class VillagerSpawner {
 	
-	public static final float SPAWN_RATE = 0.05f;
+	public static final float SPAWN_RATE = 0.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 400;
+	public static final int INITIAL_RATE = 100;
 	
 	private static final int TEXTURE_CAPACITY = 50;
 	
-	private static final int VILLAGER_WIDTH = 10;
-	private static final int VILLAGER_HEIGHT = 30;
+	private static final int VILLAGER_WIDTH = 25;
+	private static final int VILLAGER_HEIGHT = 40;
 	
 	private Entity street;
 	

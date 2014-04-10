@@ -27,7 +27,7 @@ public class VillagerTextureGenerator implements TextureGenerator {
 		Color shirtColor = getShirtColor();
 		
 		generateIdle(map, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
-		
+
 		Texture texture = new Texture(map);
 		map.dispose();
 		
@@ -59,9 +59,9 @@ public class VillagerTextureGenerator implements TextureGenerator {
 		final int w = map.getWidth() / 4;
 		final int h = map.getHeight() / 2;
 		
-		for (int y = 0; y < h; ++y) {
-			for (int x = 0; x < w; ++x) {
-				map.setColor(getSkinColor());
+		for (int y = 0; y < map.getHeight(); y += h) {
+			for (int x = 0; x < map.getWidth(); x += w) {
+				map.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(),1f));
 				map.fillRectangle(x, y, w, h);
 			}
 		}

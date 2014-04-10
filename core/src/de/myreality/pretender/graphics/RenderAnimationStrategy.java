@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -28,7 +29,7 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		movingAnimations = new HashMap<Direction, Animation>();
 		idleAnimations = new HashMap<Direction, Animation>();
 		defaultRenderStrategy = new DefaultRenderStrategy();
-		time = 0;
+		time = (float) (Math.random() * frameDuration);
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
 		this.frameDuration = frameDuration;
@@ -44,35 +45,28 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		if (entity.isMoving()) {
 			
 			if (movingAnimations.isEmpty()) {
-				fillMovingAnimations(texture);
+				fillAnimations(texture, movingAnimations, 1);
 			}
 			
 			animation = movingAnimations.get(entity.getDirection());
 		} else {
 			
 			if (idleAnimations.isEmpty()) {
-				fillIdleAnimations(texture);
+				fillAnimations(texture, idleAnimations, 0);
 			}
 			
 			animation = idleAnimations.get(entity.getDirection());
 		}
 		
-		TextureRegion region = animation.getKeyFrame(time);		
-		defaultRenderStrategy.render(region.getTexture(), batch, delta, entity);
-	}
-	
-	private void fillMovingAnimations(Texture texture) {		
-		fillAnimations(texture, movingAnimations, 1);
-	}
-	
-	private void fillIdleAnimations(Texture texture) {		
-		fillAnimations(texture, idleAnimations, 0);
+		batch.draw(animation.getKeyFrame(time), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
 	}
 	
 	private void fillAnimations(Texture texture, Map<Direction, Animation> map, int row) {
 		TextureRegion[][] regions = TextureRegion.split(texture, tileWidth, tileHeight);
 		map.put(Direction.LEFT, new Animation(frameDuration, regions[row][0], regions[row][1]));
-		map.put(Direction.RIGHT, new Animation(frameDuration, regions[row][2], regions[row][3]));	
+		map.put(Direction.RIGHT, new Animation(frameDuration, regions[row][2], regions[row][3]));
+		map.get(Direction.LEFT).setPlayMode(PlayMode.LOOP);
+		map.get(Direction.RIGHT).setPlayMode(PlayMode.LOOP);
 	}
 
 }
