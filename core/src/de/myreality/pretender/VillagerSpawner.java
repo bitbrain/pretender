@@ -100,9 +100,18 @@ public class VillagerSpawner {
 				
 				float speed = 8.0f;
 				
-				speed *= Math.random() > 0.5f ? 1 : -1;
+				float factor = Math.random() > 0.5f ? speed : -speed;
 				
-				float newPos = entity.getY() + speed;
+				float newPos = entity.getY() + factor;
+				
+				if (newPos + entity.getBody().getY() <= street.getY()) {
+					newPos = entity.getY() + speed;
+				}
+				
+				if (newPos + entity.getHeight() >= street.getY() + street.getHeight()) {
+					newPos = entity.getY() - speed;
+				}
+				
 				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION)
 				.target(newPos)
 				.delay(delay)
