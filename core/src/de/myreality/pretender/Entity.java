@@ -44,6 +44,10 @@ public class Entity implements RenderTarget, Poolable {
 		return body.contains(other.body) || body.overlaps(other.body);
 	}
 	
+	public void setRenderStrategy(RenderStrategy strategy) {
+		this.renderStrategy = strategy;
+	}
+	
 	public Direction getDirection() {
 		return direction;
 	}

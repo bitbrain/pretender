@@ -3,6 +3,7 @@ package de.myreality.pretender;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
+import de.myreality.pretender.graphics.RenderAnimationStrategy;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.TexturePool;
 import de.myreality.pretender.graphics.VillagerTextureGenerator;
@@ -10,6 +11,7 @@ import de.myreality.pretender.graphics.VillagerTextureGenerator;
 public class VillagerSpawner {
 	
 	public static final float SPAWN_RATE = 0.05f;
+	public static final float FRAME_DURATION = 0.5f;
 	
 	public static final int INITIAL_RATE = 400;
 	
@@ -33,7 +35,7 @@ public class VillagerSpawner {
 		this.renderer = renderer;
 		
 		texturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
-		texturePool.setTextureSize(VILLAGER_WIDTH, VILLAGER_HEIGHT);
+		texturePool.setTextureSize(VILLAGER_WIDTH * 4, VILLAGER_HEIGHT * 2);
 		
 		entityPool = Pools.get(Entity.class);
 		
@@ -60,9 +62,11 @@ public class VillagerSpawner {
 	void spawn(float x, float y) {
 		Entity villager = entityPool.obtain();
 		villager.setPosition(x, y);
-		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);		
+		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
+		
 		villager.setTexture(texturePool.get());
-		villager.setBehavior(new VillagerBehavior());
+		villager.setRenderStrategy(new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION));
+		villager.setBehavior(new VillagerBehavior());		
 		renderer.add(villager);
 	}
 	

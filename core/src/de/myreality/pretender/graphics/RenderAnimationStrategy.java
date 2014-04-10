@@ -37,7 +37,7 @@ public class RenderAnimationStrategy implements RenderStrategy {
 	@Override
 	public void render(Texture texture, Batch batch, float delta, Entity entity) {
 		
-		time += delta;
+		time += delta + 1;
 		
 		Animation animation = null;
 		
