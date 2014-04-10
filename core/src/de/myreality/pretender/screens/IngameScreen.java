@@ -157,17 +157,17 @@ public class IngameScreen implements Screen {
 		spawner = new VillagerSpawner(street, renderer, tweenManager);
 		
 		// Do day night cycle
-		Tween.to(ambientColor, ColorTween.R, DAY_DURATION / 2)
+		Tween.to(ambientColor, ColorTween.R, DAY_DURATION)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).r)
 			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
-		Tween.to(ambientColor, ColorTween.G, DAY_DURATION / 2)
+		Tween.to(ambientColor, ColorTween.G, DAY_DURATION)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).g)
 			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
-		Tween.to(ambientColor, ColorTween.B, DAY_DURATION / 2)
+		Tween.to(ambientColor, ColorTween.B, DAY_DURATION)
 			 .target(Color.valueOf(Resources.COLOR_NIGHT).b)
 			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)

@@ -55,9 +55,9 @@ public class Renderer {
 		
 		for (RenderTarget target : targets) {
 			
-			if (target.getX() < 0 || target.getY() < 0 ||
-				target.getX() > Gdx.graphics.getWidth() ||
-				target.getY() > Gdx.graphics.getHeight()) {
+			if (target.getBody().getX() + target.getBody().getWidth() < 0 || target.getBody().getY() + target.getBody().getHeight() < 0 ||
+				target.getBody().getX() > Gdx.graphics.getWidth() ||
+				target.getBody().getY() > Gdx.graphics.getHeight()) {
 				remove(target);
 			} else {
 				target.draw(batch, delta);
@@ -79,7 +79,7 @@ public class Renderer {
 
 		@Override
 		public int compare(RenderTarget targetA, RenderTarget targetB) {			
-			return Math.round(targetA.getY() - targetB.getY());
+			return Math.round((targetA.getY() + targetA.getBody().getY()) - (targetB.getY() + targetB.getBody().getY()));
 		}
 		
 	}

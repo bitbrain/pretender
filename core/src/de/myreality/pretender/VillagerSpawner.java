@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
@@ -70,7 +71,7 @@ public class VillagerSpawner {
 		Entity villager = entityPool.obtain();
 		villager.setPosition(x, y);
 		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
-		
+		villager.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 3, VILLAGER_WIDTH, VILLAGER_HEIGHT / 3));
 		villager.setTexture(texturePool.get());
 		RenderAnimationStrategy str = new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION);
 		villager.setRenderStrategy(str);
@@ -96,6 +97,18 @@ public class VillagerSpawner {
 					.delay(delay)
 					.ease(TweenEquations.easeInQuad)
 					.start(tweenManager);
+				
+				float speed = 8.0f;
+				
+				speed *= Math.random() > 0.5f ? 1 : -1;
+				
+				float newPos = entity.getY() + speed;
+				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION)
+				.target(newPos)
+				.delay(delay)
+				.ease(TweenEquations.easeInQuad)
+				.start(tweenManager);
+				
 				delay = 0f;
 			}
 		}

@@ -86,6 +86,10 @@ public class Entity implements RenderTarget, Poolable {
 		setY(y);
 	}
 	
+	public Rectangle getBody() {
+		return body;
+	}
+	
 	public void setX(float x) {
 		
 		if (x < pos.x) {
