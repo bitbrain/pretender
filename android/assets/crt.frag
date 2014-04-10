@@ -13,7 +13,9 @@ uniform float noiseFactor;
 uniform float time;
 uniform float intensity;
 uniform float lineSpeed;
-uniform float lightness;
+uniform vec3 ambient;
+uniform float width;
+uniform float height;
 
 float rand(vec2 co, float time){
     return fract(sin(dot(co.xy ,vec2(12.9898 + time / 10.0,78.233))) * 43758.5453);
@@ -24,9 +26,6 @@ const float RADIUS = 1.0f;
 
 //softness of our vignette, between 0.0 and 1.0
 const float SOFTNESS = 0.95;
-
-//sepia colour, adjust to taste
-const vec3 SEPIA = vec3(1.4, 0.9, 0.8); 
 
 void main() {
  	//sample our texture
@@ -39,7 +38,7 @@ void main() {
     vec4 colorNoise = mix(pel, pel * rand(v_texCoords, time),noiseFactor);
     vec4 color = mix(colorNoise / 1.5, colorNoise, wave_pos + 0.5);
     
-    vec2 resolution = vec2(900, 500);
+    vec2 resolution = vec2(width, height);
     
     //determine center position
     vec2 position = (gl_FragCoord.xy / resolution.xy) - vec2(0.5);
@@ -61,7 +60,7 @@ void main() {
     //3. SEPIA
 
     //create our sepia tone from some constant value
-    vec3 sepiaColor = vec3(gray) * SEPIA;
+    vec3 sepiaColor = vec3(gray) * ambient;
 
     //again we'll use mix so that the sepia effect is at 75%
     texColor.rgb = mix(texColor.rgb, sepiaColor, 0.95);

@@ -1,5 +1,7 @@
 package de.myreality.pretender.screens;
 
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -56,6 +58,8 @@ public class IngameScreen implements Screen {
 	
 	private long time;
 	
+	private TweenManager tweenManager;
+	
 	public IngameScreen(PretenderGame game) {
 		this.game = game;
 		time = 0;
@@ -70,6 +74,7 @@ public class IngameScreen implements Screen {
 		
 		spawner.update(delta);
 		
+		tweenManager.update(delta);
 		stage.act(delta);
 		camera.update();
 		
@@ -95,6 +100,10 @@ public class IngameScreen implements Screen {
 			crtShader.setUniformf("noiseFactor", 0.2f);
 			crtShader.setUniformf("intensity", 1.6f);
 			crtShader.setUniformf("lineSpeed", 12.5f);
+			crtShader.setUniformf("lineSpeed", 12.5f);
+			crtShader.setUniformf("width", Gdx.graphics.getWidth());
+			crtShader.setUniformf("height", Gdx.graphics.getHeight());
+			crtShader.setUniformf("ambient", 1.1f, 0.5f, 1.1f);
 			batch.draw(buffer.getColorBufferTexture(), 0f, 0f);
 		batch.end();
 		
@@ -122,6 +131,7 @@ public class IngameScreen implements Screen {
 
 	@Override
 	public void show() {
+		tweenManager = new TweenManager();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());			
 		camera.setToOrtho(true);
 		pool = Pools.get(Entity.class);
