@@ -1,5 +1,7 @@
 package de.myreality.pretender;
 
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
@@ -30,12 +32,15 @@ public class VillagerSpawner {
 	
 	private float time, totalTime;
 	
-	public VillagerSpawner(Entity street, Renderer renderer) {
+	private TweenManager tweenManager;
+	
+	public VillagerSpawner(Entity street, Renderer renderer, TweenManager tweenManager) {
 		this.street = street;
 		this.renderer = renderer;
 		
 		texturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
 		texturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
+		this.tweenManager = tweenManager;
 		
 		entityPool = Pools.get(Entity.class);
 		
@@ -77,8 +82,10 @@ public class VillagerSpawner {
 
 		@Override
 		public void behave(float delta, Entity entity) {
-			float randSpeed = (float) (Math.random() * 20.0f);
-			entity.setX((float)Math.floor((entity.getX() - (30.0 + randSpeed) * Math.abs(Math.sin(Math.pow(timeStamp + totalTime, 2))) * delta)));
+			if (!tweenManager.containsTarget(entity)) {
+				
+				
+			}
 		}
 		
 	}

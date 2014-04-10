@@ -60,13 +60,13 @@ void main() {
     //3. SEPIA
 
     //create our sepia tone from some constant value
-    vec3 sepiaColor = vec3(gray) * ambient;
+    vec3 sepiaColor = vec3(gray) * (ambient * 5.0f);
 
     //again we'll use mix so that the sepia effect is at 75%
     texColor.rgb = mix(texColor.rgb, sepiaColor, 0.95);
     
     vec4 texelColor = texture2D(u_texture, gl_TexCoord[0].xy);
-    vec4 scaledColor = texelColor * vec4(1.1, 1.1, 1.1, 1.0);
+    vec4 scaledColor = texelColor * vec4(0.1, 0.1, 0.1, 1.0);
     float luminance = scaledColor.r + scaledColor.g + scaledColor.b ;
     vec4 col = vec4( luminance, luminance, luminance, texelColor.a);
     

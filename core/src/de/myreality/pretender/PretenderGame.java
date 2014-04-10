@@ -1,9 +1,12 @@
 package de.myreality.pretender;
 
+import aurelienribon.tweenengine.Tween;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 
 import de.myreality.pretender.screens.IngameScreen;
+import de.myreality.pretender.tweens.EntityTween;
 
 public class PretenderGame extends Game {
 	
@@ -30,6 +33,6 @@ public class PretenderGame extends Game {
 	}
 	
 	void loadResources() {
-		
+		Tween.registerAccessor(Entity.class, new EntityTween());
 	}
 }

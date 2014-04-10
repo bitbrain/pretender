@@ -103,7 +103,7 @@ public class IngameScreen implements Screen {
 			crtShader.setUniformf("lineSpeed", 12.5f);
 			crtShader.setUniformf("width", Gdx.graphics.getWidth());
 			crtShader.setUniformf("height", Gdx.graphics.getHeight());
-			crtShader.setUniformf("ambient", 1.1f, 0.5f, 1.1f);
+			crtShader.setUniformf("ambient", 2.1f, 1.1f, 1.7f);
 			batch.draw(buffer.getColorBufferTexture(), 0f, 0f);
 		batch.end();
 		
@@ -146,7 +146,7 @@ public class IngameScreen implements Screen {
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 		
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
-		spawner = new VillagerSpawner(street, renderer);
+		spawner = new VillagerSpawner(street, renderer, tweenManager);
 	}
 
 	@Override
