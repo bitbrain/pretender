@@ -55,20 +55,16 @@ void main() {
      //2. GRAYSCALE
 
     //convert to grayscale using NTSC conversion weights
-    float gray = dot(texColor.rgb, vec3(0.299, 0.287, 0.114));
+    float gray = dot(texColor.rgb, vec3(0.299, 0.187, 0.114));
 
     //3. SEPIA
 
     //create our sepia tone from some constant value
-    vec3 sepiaColor = vec3(gray) * (ambient * 5.0f);
+    vec3 sepiaColor =  mix(vec3(gray), (ambient * 4), 0.2f);
 
     //again we'll use mix so that the sepia effect is at 75%
-    texColor.rgb = mix(texColor.rgb, sepiaColor, 0.95);
+    texColor.rgb = mix(texColor.rgb, sepiaColor, 0.45);
     
-    vec4 texelColor = texture2D(u_texture, gl_TexCoord[0].xy);
-    vec4 scaledColor = texelColor * vec4(0.1, 0.1, 0.1, 1.0);
-    float luminance = scaledColor.r + scaledColor.g + scaledColor.b ;
-    vec4 col = vec4( luminance, luminance, luminance, texelColor.a);
     
-    gl_FragColor = color * texColor * col;
+    gl_FragColor = color * texColor;
 }

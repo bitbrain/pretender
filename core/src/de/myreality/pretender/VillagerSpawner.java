@@ -33,7 +33,7 @@ public class VillagerSpawner {
 	
 	private TexturePool texturePool;
 	
-	private float time, totalTime;
+	private float time;
 	
 	private TweenManager tweenManager;
 	
@@ -55,7 +55,6 @@ public class VillagerSpawner {
 	public void update(float delta) {
 		
 		time += delta;
-		totalTime += delta;
 		
 		if (time >= SPAWN_RATE) {
 			time = time - SPAWN_RATE;
@@ -75,20 +74,17 @@ public class VillagerSpawner {
 		villager.setTexture(texturePool.get());
 		RenderAnimationStrategy str = new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION);
 		villager.setRenderStrategy(str);
-		villager.setBehavior(new VillagerBehavior(str));		
+		villager.setBehavior(new VillagerBehavior(str.getInitialDelay()));		
 		renderer.add(villager);
 	}
 	
 	
 	class VillagerBehavior implements EntityBehavior {
 		
-		private RenderAnimationStrategy strategy;
-		
 		private float delay;
 		
-		public VillagerBehavior(RenderAnimationStrategy strategy) {
-			this.strategy = strategy;
-			delay = strategy.getInitialDelay();
+		public VillagerBehavior(float delay) {
+			this.delay = delay;
 		}
 
 		@Override

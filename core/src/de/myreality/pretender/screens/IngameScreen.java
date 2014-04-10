@@ -1,5 +1,7 @@
 package de.myreality.pretender.screens;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
@@ -29,10 +31,13 @@ import de.myreality.pretender.graphics.HouseTextureGenerator;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.StreetTextureGenerator;
 import de.myreality.pretender.graphics.TextureGenerator;
+import de.myreality.pretender.tweens.ColorTween;
 
 public class IngameScreen implements Screen {
 	
 	private static final Color SKY = Color.valueOf(Resources.COLOR_SKY);
+	
+	private static final float DAY_DURATION = 10f;
 	
 	private PretenderGame game;
 	
@@ -58,11 +63,14 @@ public class IngameScreen implements Screen {
 	
 	private long time;
 	
+	private Color ambientColor;
+	
 	private TweenManager tweenManager;
 	
 	public IngameScreen(PretenderGame game) {
 		this.game = game;
 		time = 0;
+		ambientColor = Color.valueOf(Resources.COLOR_DAY);
 	}
 
 	@Override
@@ -103,7 +111,7 @@ public class IngameScreen implements Screen {
 			crtShader.setUniformf("lineSpeed", 12.5f);
 			crtShader.setUniformf("width", Gdx.graphics.getWidth());
 			crtShader.setUniformf("height", Gdx.graphics.getHeight());
-			crtShader.setUniformf("ambient", 2.1f, 1.1f, 1.7f);
+			crtShader.setUniformf("ambient", ambientColor.r, ambientColor.g, ambientColor.b);
 			batch.draw(buffer.getColorBufferTexture(), 0f, 0f);
 		batch.end();
 		
@@ -147,6 +155,23 @@ public class IngameScreen implements Screen {
 		
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
 		spawner = new VillagerSpawner(street, renderer, tweenManager);
+		
+		// Do day night cycle
+		Tween.to(ambientColor, ColorTween.R, DAY_DURATION / 2)
+			 .target(Color.valueOf(Resources.COLOR_NIGHT).r)
+			 .ease(TweenEquations.easeOutCubic)
+			 .repeatYoyo(Tween.INFINITY, 0)
+			 .start(tweenManager);
+		Tween.to(ambientColor, ColorTween.G, DAY_DURATION / 2)
+			 .target(Color.valueOf(Resources.COLOR_NIGHT).g)
+			 .ease(TweenEquations.easeOutCubic)
+			 .repeatYoyo(Tween.INFINITY, 0)
+			 .start(tweenManager);
+		Tween.to(ambientColor, ColorTween.B, DAY_DURATION / 2)
+			 .target(Color.valueOf(Resources.COLOR_NIGHT).b)
+			 .ease(TweenEquations.easeOutCubic)
+			 .repeatYoyo(Tween.INFINITY, 0)
+			 .start(tweenManager);
 	}
 
 	@Override

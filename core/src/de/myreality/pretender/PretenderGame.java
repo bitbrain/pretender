@@ -4,8 +4,10 @@ import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 
 import de.myreality.pretender.screens.IngameScreen;
+import de.myreality.pretender.tweens.ColorTween;
 import de.myreality.pretender.tweens.EntityTween;
 
 public class PretenderGame extends Game {
@@ -34,5 +36,6 @@ public class PretenderGame extends Game {
 	
 	void loadResources() {
 		Tween.registerAccessor(Entity.class, new EntityTween());
+		Tween.registerAccessor(Color.class, new ColorTween());
 	}
 }
