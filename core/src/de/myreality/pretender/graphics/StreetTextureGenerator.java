@@ -32,7 +32,7 @@ public class StreetTextureGenerator implements TextureGenerator {
 			offset += LINE_WIDTH + LINE_SPACING;
 		}
 			 
-		map.setColor(Color.valueOf("888888"));
+		map.setColor(Color.valueOf("aaaaaa"));
 		map.fillRectangle(0, height - height / 6, width, height / 6);
 		
 		Texture texture = new Texture(map);

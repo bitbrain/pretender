@@ -9,7 +9,6 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	
 	private Color[] SKIN_COLORS = new Color[] {
 			
-			Color.valueOf("642d00"),
 			Color.valueOf("f8e8cb"),
 			Color.valueOf("bda684"),
 			Color.valueOf("f1e8dc")
@@ -47,11 +46,13 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getTrousesColor() {
-		return Color.valueOf("1f273b");
+		return Color.valueOf("5b7aa9");
 	}
 	
 	private Color getShirtColor() {
-		return Color.DARK_GRAY;
+		return new Color((float)(Math.random() * 0.3f) + 0.7f, 
+				  (float)(Math.random() * 0.2f) + 0.3f, 
+				  (float)(Math.random() * 0.2f) + 0.3f, 1f);
 	}
 
 	private void generate(Pixmap map, Color skinColor, Color hairColor, Color shoeColor, Color trousesColor, Color shirtColor) {		

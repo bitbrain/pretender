@@ -118,8 +118,6 @@ public class IngameScreen implements Screen {
 		batch.end();
 		
 		stage.draw();
-		
-		logger.log();
 	}
 
 	@Override

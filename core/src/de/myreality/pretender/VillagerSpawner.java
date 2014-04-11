@@ -19,7 +19,7 @@ public class VillagerSpawner {
 	public static final float SPAWN_RATE = 0.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 100;
+	public static final int INITIAL_RATE = 400;
 	
 	private static final int TEXTURE_CAPACITY = 50;
 	
@@ -84,17 +84,29 @@ public class VillagerSpawner {
 		
 		private float delay;
 		
+		private float time;
+		
+		private float waitTime;
+		
 		public VillagerBehavior(float delay) {
 			this.delay = delay;
+			time = delay;
+			waitTime = (float) (1f + Math.random() * 4f);
 		}
 
 		@Override
 		public void behave(float delta, Entity entity) {
-			if (!tweenManager.containsTarget(entity)) {
+			
+			time += delta;
+			
+			if (!tweenManager.containsTarget(entity) && time >= waitTime) {
+				
+				time = 0;
+				waitTime = (float) (1f + Math.random() * 4f);
+				float xSpeed = (float) (10.0f + Math.random() * 5f);
 				
 				Tween.to(entity, EntityTween.POS_X, FRAME_DURATION)
-					.target(entity.getX() - 15.0f)
-					.delay(delay)
+					.target(entity.getX() - xSpeed)
 					.ease(TweenEquations.easeInQuad)
 					.start(tweenManager);
 				
@@ -114,7 +126,6 @@ public class VillagerSpawner {
 				
 				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION)
 				.target(newPos)
-				.delay(delay)
 				.ease(TweenEquations.easeInQuad)
 				.start(tweenManager);
 				

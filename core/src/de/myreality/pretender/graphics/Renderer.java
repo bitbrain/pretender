@@ -64,8 +64,6 @@ public class Renderer {
 			}
 		}
 		
-		System.out.println(targets.size() + ", " + removeQueue.size());
-		
 		while (!removeQueue.isEmpty()) {
 			RenderTarget target = removeQueue.poll();
 			targets.remove(target);

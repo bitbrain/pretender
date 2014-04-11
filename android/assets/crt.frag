@@ -52,7 +52,7 @@ void main() {
     vec4 windowColor = texColor;
 
     //apply the vignette with 50% opacity
-    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 0.8f);
+    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 0.7f);
     float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
      //create our sepia tone from some constant value
      vec3 sepiaColor = vec3(gray) * ambient;
