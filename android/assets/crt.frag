@@ -31,7 +31,7 @@ void main() {
  	//sample our texture
     vec4 texColor = texture2D(u_texture, v_texCoords);
 	float speedFactor = 1.0 / lineSpeed * 10.0;
-	float global_pos = (v_texCoords.y + time / speedFactor + 1000.0) * frequency;
+	float global_pos = (v_texCoords.y + time / speedFactor + 100.0) * frequency;
     float wave_pos = cos((fract( global_pos ) - 0.5)*intensity);
     vec4 pel = texture2D( u_texture, v_texCoords );
     
@@ -52,25 +52,23 @@ void main() {
     vec4 windowColor = texColor;
 
     //apply the vignette with 50% opacity
-    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 1.3f - ambient.r);
-    
-     //2. GRAYSCALE
-
-    //convert to grayscale using NTSC conversion weights
+    texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 0.8f);
     float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));
-
-    //3. SEPIA
-
-    //create our sepia tone from some constant value
-    vec3 sepiaColor =  (3 * ambient) * gray;
-
-    //again we'll use mix so that the sepia effect is at 75%
-    texColor.rgb = mix(texColor.rgb, sepiaColor, 0.85);     
+     //create our sepia tone from some constant value
+     vec3 sepiaColor = vec3(gray) * ambient;
+ 
+     //again we'll use mix so that the sepia effect is at 75%
+     texColor.rgb = mix(texColor.rgb, sepiaColor, 0.95);
+     
+     vec4 scaledColor = texColor * vec4(2.4, 2.59, 2.51, 1.0);
+     float luminance = scaledColor.r + scaledColor.g + scaledColor.b ;
+     vec4 newColor = vec4( luminance, luminance, luminance, texColor.a);
+      
     
-    if (windowColor.r > 0.9 || windowColor.g > 0.9) 
+    if (windowColor.r > 0.9 && windowColor.g > 0.8 && windowColor.b < 0.6) 
     {
     	texColor.rgb = windowColor.rgb;
     }   
     
-    gl_FragColor = color * texColor;
+    gl_FragColor = color * texColor * newColor;
 }

@@ -24,7 +24,7 @@ public class VillagerSpawner {
 	private static final int TEXTURE_CAPACITY = 50;
 	
 	private static final int VILLAGER_WIDTH = 25;
-	private static final int VILLAGER_HEIGHT = 40;
+	private static final int VILLAGER_HEIGHT = 32;
 	
 	private Entity street;
 	

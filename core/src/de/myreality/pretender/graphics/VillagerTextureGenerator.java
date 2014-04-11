@@ -26,7 +26,7 @@ public class VillagerTextureGenerator implements TextureGenerator {
 		Color trousesColor = getTrousesColor();
 		Color shirtColor = getShirtColor();
 		
-		generateIdle(map, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+		generate(map, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
 
 		Texture texture = new Texture(map);
 		map.dispose();
@@ -47,25 +47,55 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getTrousesColor() {
-		return Color.BLUE;
+		return Color.valueOf("1f273b");
 	}
 	
 	private Color getShirtColor() {
-		return Color.RED;
+		return Color.DARK_GRAY;
 	}
 
-	private void generateIdle(Pixmap map, Color skinColor, Color hairColor, Color shoeColor, Color trousesColor, Color shirtColor) {		
+	private void generate(Pixmap map, Color skinColor, Color hairColor, Color shoeColor, Color trousesColor, Color shirtColor) {		
 		
 		final int w = map.getWidth() / 2;
 		final int h = map.getHeight() / 2;
 		
 		for (int y = 0; y < map.getHeight(); y += h) {
 			for (int x = 0; x < map.getWidth(); x += w) {
-				map.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(),1f));
-				map.fillRectangle(x, y, w, h);
-				map.setColor(Color.ORANGE);
-				map.fillRectangle(x, y, 5, 5);
+				 
+				if (y == 0) { // IDLE
+					drawBody(map, x, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+				} else { // MOVING
+					drawBody(map, x, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+				}
 			}
 		}
+	}
+	
+	private void drawBody(Pixmap map, int x, int y, int width, int height, Color skinColor, Color hairColor, Color shoeColor, Color trousesColor, Color shirtColor) {
+		
+		final int HEAD_SIZE = width / 2;
+		drawHead(map, x, y + height - HEAD_SIZE, HEAD_SIZE, skinColor, hairColor);
+		drawTorso(map, x, (int) (y + height - HEAD_SIZE * 2), HEAD_SIZE, height, shirtColor);
+		drawTrousers(map, x, y, height, HEAD_SIZE, trousesColor);
+	}
+	
+	private void drawTrousers(Pixmap map, int x, int y, int height, int headSize,  Color trousersColor) {
+		map.setColor(trousersColor);
+		map.fillRectangle((int) (x + ((headSize / 2 - (headSize / 2f) / 2))), y, (int) (headSize / 2f), height - (int) (headSize * 2));
+	}
+	
+	private void drawTorso(Pixmap map, int x, int y, int headSize, int height, Color shirtColor) {
+		map.setColor(shirtColor);
+		map.fillRectangle((int) (x + ((headSize / 2 - (headSize / 1.5f) / 2))), y, (int) (headSize / 1.5f), (int) (headSize));
+	}
+	
+	private void drawHead(Pixmap map, int x, int y, int size, Color skinColor, Color hairColor) {
+		map.setColor(skinColor);
+		map.fillRectangle(x, y, size, size);
+		map.setColor(hairColor);
+		map.fillRectangle(x, y + size - (int)(size / 2.0f), size, (int) (size / 2.0f));
+		map.setColor(Color.BLACK);
+		map.fillRectangle(x + 2, y, 3, 4);
+		map.fillRectangle(x + size - 5, y, 3, 4);
 	}
 }

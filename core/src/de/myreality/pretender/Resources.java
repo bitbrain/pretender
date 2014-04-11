@@ -9,6 +9,6 @@ public final class Resources {
 	public static final String COLOR_STREET_LINES = "cccccc";
 	public static final String COLOR_SKY = "0084ff";
 	
-	public static final String COLOR_NIGHT = "7a41b0";
-	public static final String COLOR_DAY = "e09c3a";
+	public static final String COLOR_NIGHT = "ff0000";
+	public static final String COLOR_DAY = "7a41b0";
 }

@@ -75,7 +75,7 @@ public class IngameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(SKY.r, SKY.g, SKY.b, SKY.a);
+		Gdx.gl.glClearColor(0f, 0f, 0f, SKY.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		time += delta + 1;
@@ -104,14 +104,13 @@ public class IngameScreen implements Screen {
 		
 		batch.begin();		
 			crtShader.setUniformf("time", time);
-			crtShader.setUniformf("frequency", 100.0f);
-			crtShader.setUniformf("noiseFactor", 0.2f);
-			crtShader.setUniformf("intensity", 1.6f);
-			crtShader.setUniformf("lineSpeed", 12.5f);
-			crtShader.setUniformf("lineSpeed", 12.5f);
+			crtShader.setUniformf("frequency", 160.0f);
+			crtShader.setUniformf("noiseFactor", 0.3f);
+			crtShader.setUniformf("intensity", 1.5f);
+			crtShader.setUniformf("lineSpeed", 50.5f);
 			crtShader.setUniformf("width", Gdx.graphics.getWidth());
 			crtShader.setUniformf("height", Gdx.graphics.getHeight());
-			crtShader.setUniformf("ambient", ambientColor.r, ambientColor.g, ambientColor.b);
+			crtShader.setUniformf("ambient", ambientColor.r * 1.2f, ambientColor.g * 1.2f, ambientColor.b * 1.2f);
 			batch.draw(buffer.getColorBufferTexture(), 0f, 0f);
 		batch.end();
 		
@@ -154,6 +153,8 @@ public class IngameScreen implements Screen {
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 		
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
+		
+		System.out.println(crtShader.getLog());
 		spawner = new VillagerSpawner(street, renderer, tweenManager);
 		
 		// Do day night cycle
