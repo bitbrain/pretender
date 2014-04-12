@@ -105,9 +105,9 @@ public class VillagerSpawner {
 				waitTime = (float) (1f + Math.random() * 4f);
 				float xSpeed = (float) (10.0f + Math.random() * 5f);
 				
-				Tween.to(entity, EntityTween.POS_X, FRAME_DURATION)
+				Tween.to(entity, EntityTween.POS_X, FRAME_DURATION * 2)
 					.target(entity.getX() - xSpeed)
-					.ease(TweenEquations.easeInQuad)
+					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
 				
 				float speed = 8.0f;
@@ -124,9 +124,9 @@ public class VillagerSpawner {
 					newPos = entity.getY() - speed;
 				}
 				
-				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION)
+				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION * 2)
 				.target(newPos)
-				.ease(TweenEquations.easeInQuad)
+				.ease(TweenEquations.easeInOutCubic)
 				.start(tweenManager);
 				
 				delay = 0f;

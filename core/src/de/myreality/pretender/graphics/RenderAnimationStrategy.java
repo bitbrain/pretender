@@ -45,7 +45,7 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		Animation animation = null;
 		
 		if (entity.isMoving()) {
-			animation = movingAnimation;
+			animation = movingAnimation;			
 		} else {
 			animation = idleAnimation;
 		}

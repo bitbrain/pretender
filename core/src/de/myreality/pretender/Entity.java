@@ -119,6 +119,9 @@ public class Entity implements RenderTarget, Poolable {
 		if (texture != null && renderStrategy != null) {
 			renderStrategy.render(texture, batch, delta, this);
 		}
+		
+		lastPos.x = pos.x;
+		lastPos.y = pos.y;
 	}
 	
 	public boolean isMoving() {

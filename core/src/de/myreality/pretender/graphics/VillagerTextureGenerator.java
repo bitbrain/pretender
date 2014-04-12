@@ -64,9 +64,14 @@ public class VillagerTextureGenerator implements TextureGenerator {
 			for (int x = 0; x < map.getWidth(); x += w) {
 				 
 				if (y == 0) { // IDLE
-					drawBody(map, x, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+					drawBody(map, x + w / 3, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
 				} else { // MOVING
-					drawBody(map, x, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+					drawBody(map, x + w / 3, y, w, h, skinColor, hairColor, shoeColor, trousesColor, shirtColor);
+				
+					if (x == w) {
+						map.setColor(shirtColor);
+						map.fillRectangle(x, y + h / 2 - 2, 10, 3);
+					}
 				}
 			}
 		}
