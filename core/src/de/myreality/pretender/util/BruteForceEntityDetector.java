@@ -9,17 +9,37 @@ public class BruteForceEntityDetector implements EntityDetector {
 	
 	private Collection<RenderTarget> entities;
 	
-	public BruteForceEntityDetector(Collection<RenderTarget> entities) {
+	private RenderTarget[] exceptions;
+	
+	public BruteForceEntityDetector(Collection<RenderTarget> entities, RenderTarget ... exceptions) {
 		this.entities = entities;
+		this.exceptions = exceptions;
 	}
 
 	@Override
 	public boolean hasEntity(float x, float y) {
-		for (RenderTarget entity : entities) {			
+		
+		boolean skip = false;
+		
+		for (RenderTarget entity : entities) {
+			
+			for (RenderTarget ex : exceptions) {
+				if (ex.equals(entity)) {
+					skip = true;
+					break;
+				}
+			}
+			
+			if (skip) {
+				skip = false;
+				continue;
+			}
+			
 			boolean xCheck = entity.getX() + entity.getBody().x <= x &&
 					 		  entity.getX() + entity.getBody().x + entity.getBody().width >= x;
 			boolean yCheck = entity.getY() + entity.getBody().y <= y &&
 			 		          entity.getY() + entity.getBody().y + entity.getBody().height >= y;
+			 		          
 			if (xCheck && yCheck) {
 				return true;
 			}

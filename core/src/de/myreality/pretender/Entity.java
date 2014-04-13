@@ -162,4 +162,63 @@ public class Entity implements RenderTarget, Poolable {
 		renderStrategy = new DefaultRenderStrategy();
 		direction = Direction.NONE;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((body == null) ? 0 : body.hashCode());
+		result = prime * result
+				+ ((direction == null) ? 0 : direction.hashCode());
+		result = prime * result + height;
+		result = prime * result + ((lastPos == null) ? 0 : lastPos.hashCode());
+		result = prime * result + ((pos == null) ? 0 : pos.hashCode());
+		result = prime * result + width;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Entity other = (Entity) obj;
+		if (body == null) {
+			if (other.body != null)
+				return false;
+		} else if (!body.equals(other.body))
+			return false;
+		if (direction != other.direction)
+			return false;
+		if (height != other.height)
+			return false;
+		if (lastPos == null) {
+			if (other.lastPos != null)
+				return false;
+		} else if (!lastPos.equals(other.lastPos))
+			return false;
+		if (pos == null) {
+			if (other.pos != null)
+				return false;
+		} else if (!pos.equals(other.pos))
+			return false;
+		if (width != other.width)
+			return false;
+		return true;
+	}
+	
+	
+	
+	
+	
+	
 }

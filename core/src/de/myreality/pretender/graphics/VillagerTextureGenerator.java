@@ -9,9 +9,9 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	
 	private Color[] SKIN_COLORS = new Color[] {
 			
-			Color.valueOf("f8e8cb"),
-			Color.valueOf("bda684"),
-			Color.valueOf("f1e8dc")
+			Color.valueOf("9898cb"),
+			Color.valueOf("bd9684"),
+			Color.valueOf("9198dc")
 	};
 
 	@Override
@@ -38,7 +38,7 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	}
 	
 	private Color getHairColor() {
-		return Color.BLACK;
+		return Color.valueOf("555555");
 	}
 	
 	private Color getShoeColor() {
@@ -99,9 +99,10 @@ public class VillagerTextureGenerator implements TextureGenerator {
 		map.setColor(skinColor);
 		map.fillRectangle(x, y, size, size);
 		map.setColor(hairColor);
-		map.fillRectangle(x, y + size - (int)(size / 2.0f), size, (int) (size / 2.0f));
+		map.fillRectangle(x, y + size - (int)(size / 2.3f), size, (int) (size / 2.3f));
+
 		map.setColor(Color.BLACK);
-		map.fillRectangle(x + 2, y, 3, 4);
-		map.fillRectangle(x + size - 5, y, 3, 4);
+		map.fillRectangle(x + 2, y + 1, 3, 3);
+		map.fillRectangle(x + size - 5, y + 1, 3, 3);
 	}
 }

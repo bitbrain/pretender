@@ -21,7 +21,7 @@ public class VillagerSpawner {
 	public static final float SPAWN_RATE = 0.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 500;
+	public static final int INITIAL_RATE = 800;
 	
 	private static final int TEXTURE_CAPACITY = 50;
 	
@@ -51,7 +51,7 @@ public class VillagerSpawner {
 		this.tweenManager = tweenManager;
 		
 		entityPool = Pools.get(Entity.class);
-		detector = new BruteForceEntityDetector(renderer.getRenderTargets());
+		detector = new BruteForceEntityDetector(renderer.getRenderTargets(), street);
 		
 		int spawned = 0;
 		int tries = 1000;
@@ -90,9 +90,9 @@ public class VillagerSpawner {
 	
 	void spawn(float x, float y) {
 		Entity villager = entityPool.obtain();
-		villager.setPosition(x, y);
 		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
 		villager.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 3, VILLAGER_WIDTH, VILLAGER_HEIGHT / 3));
+		villager.setPosition(x, y);
 		villager.setTexture(texturePool.get());
 		RenderAnimationStrategy str = new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, FRAME_DURATION);
 		villager.setRenderStrategy(str);
@@ -149,8 +149,8 @@ public class VillagerSpawner {
 				float newPosX = determineX(entity);
 				float newPosY = determineY(entity);	
 				
-				if (!detector.hasEntity(newPosX, newPosY)) {
-					time = 0;
+				if (!detector.hasEntity(newPosX + entity.getBody().getX(), newPosY + entity.getBody().getY())) {
+					time = delay;
 					waitTime = (float) (1f + Math.random() * 4f);
 					delay = 0f;
 					

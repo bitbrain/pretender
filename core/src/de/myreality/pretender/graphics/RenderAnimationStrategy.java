@@ -56,8 +56,6 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		} else {
 			batch.draw(animation.getKeyFrame(time), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
 		}
-		//batch.setColor(Color.RED);
-		//batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getBody().getX(), entity.getY() + entity.getBody().getY(), entity.getBody().width, entity.getBody().height);
 	}
 	
 	private void initAnimations(Texture texture) {
