@@ -41,7 +41,17 @@ public class Entity implements RenderTarget, Poolable {
 	}
 	
 	public boolean collidesWith(Entity other) {
-		return body.contains(other.body) || body.overlaps(other.body);
+		
+		float right = getX() + body.x + body.width;
+		float bottom = getY() + body.y + body.height;
+
+		float otherRight = other.getX() + other.body.x + other.body.width;
+		float otherBottom = other.getY() + other.body.y + other.body.height;
+
+		boolean collisionX = otherRight >= (getX() + body.x) && (other.getX() + other.body.x) <= right;
+		boolean collisionY = otherBottom >= (getY() + body.y) && (other.getY() + other.body.y) <= bottom;
+
+		return collisionX && collisionY;
 	}
 	
 	public void setRenderStrategy(RenderStrategy strategy) {

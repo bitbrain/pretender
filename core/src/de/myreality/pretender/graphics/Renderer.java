@@ -1,6 +1,7 @@
 package de.myreality.pretender.graphics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -33,6 +34,10 @@ public class Renderer {
 		comperator = new RenderTargetComperator();
 		this.pool = pool;
 		time = 0;
+	}
+	
+	public Collection<RenderTarget> getRenderTargets() {
+		return targets;
 	}
 	
 	public void add(RenderTarget target) {

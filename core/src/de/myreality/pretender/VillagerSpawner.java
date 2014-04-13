@@ -13,13 +13,15 @@ import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.TexturePool;
 import de.myreality.pretender.graphics.VillagerTextureGenerator;
 import de.myreality.pretender.tweens.EntityTween;
+import de.myreality.pretender.util.BruteForceEntityDetector;
+import de.myreality.pretender.util.EntityDetector;
 
 public class VillagerSpawner {
 	
 	public static final float SPAWN_RATE = 0.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 400;
+	public static final int INITIAL_RATE = 50;
 	
 	private static final int TEXTURE_CAPACITY = 50;
 	
@@ -38,6 +40,8 @@ public class VillagerSpawner {
 	
 	private TweenManager tweenManager;
 	
+	private EntityDetector detector;
+	
 	public VillagerSpawner(Entity street, Renderer renderer, TweenManager tweenManager) {
 		this.street = street;
 		this.renderer = renderer;
@@ -47,9 +51,18 @@ public class VillagerSpawner {
 		this.tweenManager = tweenManager;
 		
 		entityPool = Pools.get(Entity.class);
+		detector = new BruteForceEntityDetector(renderer.getRenderTargets());
 		
-		for (int i = 0; i < INITIAL_RATE; ++i) {
-			spawn((float)(street.getX() + street.getWidth() / 2f + (street.getWidth() / 2f) * Math.random()), (float) (street.getY() + street.getHeight() * Math.random()));
+		int spawned = 0;
+		
+		while (spawned < INITIAL_RATE) {
+			float x = (float)(street.getX() + street.getWidth() / 2f + (street.getWidth() / 2f) * Math.random());
+			float y = (float) (street.getY() + street.getHeight() * Math.random());
+			
+			if (detector.hasEntity(x, y)) {
+				spawn(x, y);
+				spawned++;
+			}
 		}
 	}
 
@@ -64,7 +77,12 @@ public class VillagerSpawner {
 	}
 	
 	void spawn() {
-		spawn(street.getX() + street.getWidth() - VILLAGER_WIDTH, (float) (street.getY() + street.getHeight() * Math.random()));
+		float x = street.getX() + street.getWidth() - VILLAGER_WIDTH;
+		float  y = (float) (street.getY() + street.getHeight() * Math.random());
+		
+		if (!detector.hasEntity(x, y)) {
+			spawn(x, y);
+		}
 	}
 	
 	void spawn(float x, float y) {
@@ -93,6 +111,29 @@ public class VillagerSpawner {
 			time = delay;
 			waitTime = (float) (1f + Math.random() * 4f);
 		}
+		
+		private float determineX(Entity entity) {
+			float xSpeed = (float) (10.0f + Math.random() * 5f);
+			return entity.getX() - xSpeed;
+		}
+		
+		private float determineY(Entity entity) {
+
+			float speed = 8.0f;
+			
+			float factor = Math.random() > 0.5f ? speed : -speed;
+			float newPosY = entity.getY() + factor;
+			
+			if (newPosY + entity.getBody().getY() <= street.getY()) {
+				newPosY = entity.getY() + speed;
+			}
+			
+			if (newPosY + entity.getHeight() >= street.getY() + street.getHeight()) {
+				newPosY = entity.getY() - speed;
+			}
+			
+			return newPosY;
+		}
 
 		@Override
 		public void behave(float delta, Entity entity) {
@@ -101,35 +142,26 @@ public class VillagerSpawner {
 			
 			if (!tweenManager.containsTarget(entity) && time >= waitTime) {
 				
-				time = 0;
-				waitTime = (float) (1f + Math.random() * 4f);
-				float xSpeed = (float) (10.0f + Math.random() * 5f);
 				
-				Tween.to(entity, EntityTween.POS_X, FRAME_DURATION * 2)
-					.target(entity.getX() - xSpeed)
+				float newPosX = determineX(entity);
+				float newPosY = determineY(entity);	
+				
+				if (!detector.hasEntity(newPosX, newPosY)) {
+					time = 0;
+					waitTime = (float) (1f + Math.random() * 4f);
+					delay = 0f;
+					
+					Tween.to(entity, EntityTween.POS_X, FRAME_DURATION * 2)
+						.target(newPosX)
+						.ease(TweenEquations.easeInOutCubic)
+						.start(tweenManager);
+					
+					
+					Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION * 2)
+					.target(newPosY)
 					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
-				
-				float speed = 8.0f;
-				
-				float factor = Math.random() > 0.5f ? speed : -speed;
-				
-				float newPos = entity.getY() + factor;
-				
-				if (newPos + entity.getBody().getY() <= street.getY()) {
-					newPos = entity.getY() + speed;
 				}
-				
-				if (newPos + entity.getHeight() >= street.getY() + street.getHeight()) {
-					newPos = entity.getY() - speed;
-				}
-				
-				Tween.to(entity, EntityTween.POS_Y, FRAME_DURATION * 2)
-				.target(newPos)
-				.ease(TweenEquations.easeInOutCubic)
-				.start(tweenManager);
-				
-				delay = 0f;
 			}
 		}
 		
