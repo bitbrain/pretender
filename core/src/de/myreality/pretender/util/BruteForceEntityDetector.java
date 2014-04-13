@@ -15,13 +15,11 @@ public class BruteForceEntityDetector implements EntityDetector {
 
 	@Override
 	public boolean hasEntity(float x, float y) {
-		for (RenderTarget entity : entities) {
-			
+		for (RenderTarget entity : entities) {			
 			boolean xCheck = entity.getX() + entity.getBody().x <= x &&
-					 		entity.getX() + entity.getBody().x + entity.getBody().width <= x;
+					 		  entity.getX() + entity.getBody().x + entity.getBody().width >= x;
 			boolean yCheck = entity.getY() + entity.getBody().y <= y &&
-			 		entity.getY() + entity.getBody().y + entity.getBody().height <= y;
-			
+			 		          entity.getY() + entity.getBody().y + entity.getBody().height >= y;
 			if (xCheck && yCheck) {
 				return true;
 			}

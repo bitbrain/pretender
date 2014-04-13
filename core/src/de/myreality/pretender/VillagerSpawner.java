@@ -21,7 +21,7 @@ public class VillagerSpawner {
 	public static final float SPAWN_RATE = 0.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 50;
+	public static final int INITIAL_RATE = 500;
 	
 	private static final int TEXTURE_CAPACITY = 50;
 	
@@ -54,15 +54,18 @@ public class VillagerSpawner {
 		detector = new BruteForceEntityDetector(renderer.getRenderTargets());
 		
 		int spawned = 0;
+		int tries = 1000;
 		
-		while (spawned < INITIAL_RATE) {
+		while (tries > 0 && spawned < INITIAL_RATE) {
 			float x = (float)(street.getX() + street.getWidth() / 2f + (street.getWidth() / 2f) * Math.random());
 			float y = (float) (street.getY() + street.getHeight() * Math.random());
 			
-			if (detector.hasEntity(x, y)) {
+			if (!detector.hasEntity(x, y)) {
 				spawn(x, y);
 				spawned++;
 			}
+			
+			tries--;
 		}
 	}
 
