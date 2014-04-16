@@ -25,14 +25,17 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import de.myreality.pretender.Entity;
+import de.myreality.pretender.EntitySpawner;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.Resources;
-import de.myreality.pretender.VillagerSpawner;
+import de.myreality.pretender.ai.AIHandler;
 import de.myreality.pretender.graphics.HouseTextureGenerator;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.StreetTextureGenerator;
 import de.myreality.pretender.graphics.TextureGenerator;
 import de.myreality.pretender.tweens.ColorTween;
+import de.myreality.pretender.util.BruteForceEntityDetector;
+import de.myreality.pretender.util.EntityDetector;
 
 public class IngameScreen implements Screen {
 	
@@ -58,7 +61,7 @@ public class IngameScreen implements Screen {
 	
 	private ShaderProgram crtShader;
 	
-	private VillagerSpawner spawner;
+	private AIHandler aiHandler;
 	
 	private FrameBuffer buffer;
 	
@@ -67,6 +70,10 @@ public class IngameScreen implements Screen {
 	private Color ambientColor;
 	
 	private TweenManager tweenManager;
+	
+	private EntityDetector entityDetector;
+	
+	private EntitySpawner entitySpawner;
 	
 	FPSLogger logger = new FPSLogger();
 	
@@ -83,7 +90,7 @@ public class IngameScreen implements Screen {
 		
 		time += delta + 1;
 		
-		spawner.update(delta);
+		aiHandler.update(delta);
 
 		tweenManager.update(delta);
 		stage.act(delta);
@@ -108,7 +115,7 @@ public class IngameScreen implements Screen {
 		batch.begin();		
 			crtShader.setUniformf("time", time);
 			crtShader.setUniformf("frequency", 160.0f);
-			crtShader.setUniformf("noiseFactor", 0.3f);
+			crtShader.setUniformf("noiseFactor", 0.1f);
 			crtShader.setUniformf("intensity", 1.5f);
 			crtShader.setUniformf("lineSpeed", 50.5f);
 			crtShader.setUniformf("width", Gdx.graphics.getWidth());
@@ -146,11 +153,15 @@ public class IngameScreen implements Screen {
 		camera.setToOrtho(true);
 		pool = Pools.get(Entity.class);
 		renderer = new Renderer(pool);
-		batch = new SpriteBatch();	
+		batch = new SpriteBatch();			
+		
 		final int BACKHEIGHT = 150;
 
 		generateStreet();
 		generateSky();
+
+		entityDetector = new BruteForceEntityDetector(renderer.getRenderTargets(), street);
+		entitySpawner = new EntitySpawner(renderer, entityDetector, tweenManager);
 		
 		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
@@ -158,7 +169,7 @@ public class IngameScreen implements Screen {
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
 		
 		System.out.println(crtShader.getLog());
-		spawner = new VillagerSpawner(street, renderer, tweenManager);
+		aiHandler = new AIHandler(street, entitySpawner, entityDetector);
 		
 		// Do day night cycle
 		Tween.to(ambientColor, ColorTween.R, DAY_DURATION)

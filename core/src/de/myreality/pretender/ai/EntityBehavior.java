@@ -1,4 +1,6 @@
-package de.myreality.pretender;
+package de.myreality.pretender.ai;
+
+import de.myreality.pretender.Entity;
 
 public interface EntityBehavior {
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
+import de.myreality.pretender.ai.EntityBehavior;
 import de.myreality.pretender.graphics.DefaultRenderStrategy;
 import de.myreality.pretender.graphics.RenderStrategy;
 import de.myreality.pretender.graphics.RenderTarget;
