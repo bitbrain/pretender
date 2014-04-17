@@ -85,7 +85,8 @@ public class Renderer {
 		@Override
 		public int compare(RenderTarget targetA, RenderTarget targetB) {		
 			
-			float value = (targetA.getY() + targetA.getBody().getY()) - (targetB.getY() + targetB.getBody().getY());
+			float value = (targetA.getY() + targetA.getOffsetY() + targetA.getBody().getY()) 
+					     - (targetB.getY() + targetB.getOffsetY() + targetB.getBody().getY());
 			
 			if (value < 0) {
 				return -1;

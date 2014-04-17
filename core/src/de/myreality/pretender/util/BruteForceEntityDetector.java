@@ -35,10 +35,10 @@ public class BruteForceEntityDetector implements EntityDetector {
 				continue;
 			}
 			
-			boolean xCheck = entity.getX() + entity.getBody().x <= x &&
-					 		  entity.getX() + entity.getBody().x + entity.getBody().width >= x;
-			boolean yCheck = entity.getY() + entity.getBody().y <= y &&
-			 		          entity.getY() + entity.getBody().y + entity.getBody().height >= y;
+			boolean xCheck = entity.getX() + entity.getBody().x < x &&
+					 		  entity.getX() + entity.getBody().x + entity.getBody().width > x;
+			boolean yCheck = entity.getY() + entity.getBody().y < y &&
+			 		          entity.getY() + entity.getBody().y + entity.getBody().height > y;
 			 		          
 			if (xCheck && yCheck) {
 				return true;

@@ -52,9 +52,9 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		}
 		
 		if (entity.getDirection() == Direction.RIGHT) {
-			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getWidth(), entity.getY(), -entity.getWidth(), entity.getHeight());
+			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getOffsetX() + entity.getWidth(), entity.getY() + entity.getOffsetY(), -entity.getWidth(), entity.getHeight());
 		} else {
-			batch.draw(animation.getKeyFrame(time), entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
+			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getOffsetX(), entity.getY() + entity.getOffsetY(), entity.getWidth(), entity.getHeight());
 		}
 	}
 	

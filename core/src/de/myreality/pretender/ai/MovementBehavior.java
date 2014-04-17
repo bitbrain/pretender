@@ -66,26 +66,34 @@ public class MovementBehavior implements EntityBehavior {
 		
 		time += delta;
 		
-		if (!tweenManager.containsTarget(entity) && time >= waitTime) {
+		if (time >= waitTime) {
 			
 			float newPosX = determineX(entity);
 			float newPosY = determineY(entity);	
+			float deltaX = newPosX - entity.getX();
+			float deltaY = newPosY - entity.getY();
 			
 			if (!entityDetector.hasEntity(newPosX + entity.getBody().getX(), newPosY + entity.getBody().getY())) {
 				
 				time = delay;
 				waitTime = (float) (1f + Math.random() * 4f);
 				delay = 0f;
-				Tween.to(entity, EntityTween.POS_X, 0.3f * 2)
-					.target(newPosX)
+				
+				entity.setX(newPosX);
+				entity.setY(newPosY);
+				
+				entity.setOffset(-deltaX, -deltaY);
+				
+				if (!tweenManager.containsTarget(entity)) {
+					Tween.to(entity, EntityTween.OFFSET_X, 0.5f)
+						.target(0f)
+						.ease(TweenEquations.easeInOutCubic)
+						.start(tweenManager);
+					Tween.to(entity, EntityTween.OFFSET_Y, 0.5f)
+					.target(0f)
 					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
-				
-				
-				Tween.to(entity, EntityTween.POS_Y, 0.3f * 2)
-				.target(newPosY)
-				.ease(TweenEquations.easeInOutCubic)
-				.start(tweenManager);
+				}
 			}
 		}
 	}

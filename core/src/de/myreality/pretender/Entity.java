@@ -17,7 +17,7 @@ public class Entity implements RenderTarget, Poolable {
 		LEFT, RIGHT, NONE
 	}
 	
-	private Vector2 pos, lastPos;
+	private Vector2 pos, lastPos, offset;
 	
 	private int width, height;
 	
@@ -34,6 +34,7 @@ public class Entity implements RenderTarget, Poolable {
 	public Entity() {
 		pos = new Vector2();
 		lastPos = new Vector2();
+		offset = new Vector2();
 		reset();
 	}
 	
@@ -82,6 +83,19 @@ public class Entity implements RenderTarget, Poolable {
 	public void setDimensions(int width, int height) {
 		setWidth(width);
 		setHeight(height);
+	}
+	
+	public void setOffset(float offsetX, float offsetY) {
+		this.offset.x = offsetX;
+		this.offset.y = offsetY;
+	}
+	
+	public float getOffsetX() {
+		return offset.x;
+	}
+	
+	public float getOffsetY() {
+		return offset.y;
 	}
 	
 	public void setWidth(int width) {

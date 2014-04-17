@@ -12,4 +12,7 @@ public interface RenderTarget extends Poolable {
 	
 	float getX();
 	float getY();
+	
+	float getOffsetX();
+	float getOffsetY();
 }
