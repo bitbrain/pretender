@@ -24,7 +24,7 @@ public class EntitySpawner {
 	
 	private Renderer renderer;
 	
-	private TexturePool villagerTexturePool;
+	private TexturePool villagerTexturePool, policeTexturePool;
 	
 	private EntityDetector detector;
 	
@@ -37,6 +37,8 @@ public class EntitySpawner {
 		this.detector = detector;
 		villagerTexturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
 		villagerTexturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
+		policeTexturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
+		policeTexturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
 	}
 	
 	public boolean spawnVillager(float x, float y, Entity parent) {
@@ -46,6 +48,19 @@ public class EntitySpawner {
 			entity.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
 			entity.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 2.2f, VILLAGER_WIDTH, VILLAGER_HEIGHT / 2.2f));
 			entity.setBehavior(new MovementBehavior(parent, detector, tweenManager));
+		}
+		
+		return false;
+	}
+	
+	public boolean spawnPolice(float x, float y, Entity parent) {
+		
+		Entity entity = spawnEntity(x, y, policeTexturePool);
+		
+		if (entity != null) {
+			entity.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
+			entity.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 2.2f, VILLAGER_WIDTH, VILLAGER_HEIGHT / 2.2f));
+			entity.setBehavior(new MovementBehavior(false, parent, detector, tweenManager));
 		}
 		
 		return false;

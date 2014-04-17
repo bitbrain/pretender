@@ -33,6 +33,13 @@ public class AIHandler {
 			
 			tries--;
 		}
+		
+		for (int i = 0; i < 60; ++i) {
+			float x = parent.getX();
+			float y = parent.getY() + i * 10;
+			
+			spawner.spawnPolice(x, y, parent);
+		}
 	}
 
 	public void update(float delta) {
