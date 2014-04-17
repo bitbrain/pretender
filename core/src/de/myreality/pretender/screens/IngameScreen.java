@@ -169,7 +169,7 @@ public class IngameScreen implements Screen {
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
 		
 		System.out.println(crtShader.getLog());
-		aiHandler = new AIHandler(street, entitySpawner, entityDetector);
+		aiHandler = new AIHandler(street, entitySpawner);
 		
 		// Do day night cycle
 		Tween.to(ambientColor, ColorTween.R, DAY_DURATION)

@@ -24,7 +24,7 @@ public class EntitySpawner {
 	
 	private Renderer renderer;
 	
-	private TexturePool texturePool;
+	private TexturePool villagerTexturePool;
 	
 	private EntityDetector detector;
 	
@@ -35,19 +35,34 @@ public class EntitySpawner {
 		this.renderer = renderer;
 		this.tweenManager = tweenManager;
 		this.detector = detector;
-		texturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
-		texturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
+		villagerTexturePool = new TexturePool(TEXTURE_CAPACITY, new VillagerTextureGenerator());
+		villagerTexturePool.setTextureSize(VILLAGER_WIDTH * 2, VILLAGER_HEIGHT * 2);
 	}
 	
-	public void spawnVillager(float x, float y, Entity parent) {
-		Entity villager = entityPool.obtain();
-		villager.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
-		villager.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 2.2f, VILLAGER_WIDTH, VILLAGER_HEIGHT / 2.2f));
-		villager.setPosition(x, y);
-		villager.setTexture(texturePool.get());
+	public boolean spawnVillager(float x, float y, Entity parent) {
+		Entity entity = spawnEntity(x, y, villagerTexturePool);
+		
+		if (entity != null) {
+			entity.setDimensions(VILLAGER_WIDTH, VILLAGER_HEIGHT);
+			entity.setBody(new Rectangle(0, VILLAGER_HEIGHT - VILLAGER_HEIGHT / 2.2f, VILLAGER_WIDTH, VILLAGER_HEIGHT / 2.2f));
+			entity.setBehavior(new MovementBehavior(parent, detector, tweenManager));
+		}
+		
+		return false;
+	}
+	
+	private Entity spawnEntity(float x, float y, TexturePool texturePool) {
+		if (detector.hasEntity(x,  y)) {
+			return null;
+		}
+		
+		Entity entity = entityPool.obtain();
+		
+		entity.setPosition(x, y);
+		entity.setTexture(texturePool.get());
 		RenderAnimationStrategy str = new RenderAnimationStrategy(VILLAGER_WIDTH, VILLAGER_HEIGHT, 300);
-		villager.setRenderStrategy(str);
-		villager.setBehavior(new MovementBehavior(parent, detector, tweenManager));	
-		renderer.add(villager);
+		entity.setRenderStrategy(str);	
+		renderer.add(entity);
+		return entity;
 	}
 }

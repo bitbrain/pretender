@@ -24,12 +24,14 @@ public class MovementBehavior implements EntityBehavior {
 	private EntityDetector entityDetector;
 	
 	public MovementBehavior(boolean left, Entity parent, EntityDetector entityDetector, TweenManager tweenManager) {
-		time = delay;
+
 		this.left = left;
 		this.parent = parent;
 		this.tweenManager = tweenManager;
 		this.entityDetector = entityDetector;
-		waitTime = (float) (1f + Math.random() * 4f);
+		waitTime = (float) (1f + Math.random() * 2f);
+		delay = waitTime;
+		time = 0;
 	}
 	
 	public MovementBehavior(Entity parent, EntityDetector entityDetector, TweenManager tweenManager) {
@@ -74,13 +76,13 @@ public class MovementBehavior implements EntityBehavior {
 				time = delay;
 				waitTime = (float) (1f + Math.random() * 4f);
 				delay = 0f;
-				Tween.to(entity, EntityTween.POS_X, 500 * 2)
+				Tween.to(entity, EntityTween.POS_X, 0.3f * 2)
 					.target(newPosX)
 					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
 				
 				
-				Tween.to(entity, EntityTween.POS_Y, 500 * 2)
+				Tween.to(entity, EntityTween.POS_Y, 0.3f * 2)
 				.target(newPosY)
 				.ease(TweenEquations.easeInOutCubic)
 				.start(tweenManager);
