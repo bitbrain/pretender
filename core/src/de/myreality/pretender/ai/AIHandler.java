@@ -1,7 +1,7 @@
 package de.myreality.pretender.ai;
 
 import de.myreality.pretender.Entity;
-import de.myreality.pretender.EntitySpawner;
+import de.myreality.pretender.util.EntityFactory;
 
 public class AIHandler {
 	
@@ -14,9 +14,9 @@ public class AIHandler {
 	
 	private float time;
 	
-	private EntitySpawner spawner;
+	private EntityFactory spawner;
 	
-	public AIHandler(Entity parent, EntitySpawner spawner) {
+	public AIHandler(Entity parent, EntityFactory spawner) {
 		this.parent = parent;		
 		this.spawner = spawner;
 		
@@ -34,12 +34,12 @@ public class AIHandler {
 			tries--;
 		}
 		
-		for (int i = 0; i < 60; ++i) {
+		/*for (int i = 0; i < 60; ++i) {
 			float x = parent.getX();
 			float y = parent.getY() + i * 10;
 			
 			spawner.spawnPolice(x, y, parent);
-		}
+		}*/
 	}
 
 	public void update(float delta) {
@@ -54,7 +54,7 @@ public class AIHandler {
 	}
 	
 	boolean spawn() {
-		float x = parent.getX() + parent.getWidth() - EntitySpawner.VILLAGER_WIDTH;
+		float x = parent.getX() + parent.getWidth() - EntityFactory.VILLAGER_WIDTH;
 		float  y = (float) (parent.getY() + parent.getHeight() * Math.random());
 		return spawner.spawnVillager(x, y, parent);
 	}

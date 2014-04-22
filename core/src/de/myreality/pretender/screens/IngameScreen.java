@@ -25,7 +25,6 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import de.myreality.pretender.Entity;
-import de.myreality.pretender.EntitySpawner;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.Resources;
 import de.myreality.pretender.ai.AIHandler;
@@ -36,6 +35,7 @@ import de.myreality.pretender.graphics.TextureGenerator;
 import de.myreality.pretender.tweens.ColorTween;
 import de.myreality.pretender.util.BruteForceEntityDetector;
 import de.myreality.pretender.util.EntityDetector;
+import de.myreality.pretender.util.EntityFactory;
 
 public class IngameScreen implements Screen {
 	
@@ -73,7 +73,7 @@ public class IngameScreen implements Screen {
 	
 	private EntityDetector entityDetector;
 	
-	private EntitySpawner entitySpawner;
+	private EntityFactory entitySpawner;
 	
 	FPSLogger logger = new FPSLogger();
 	
@@ -161,7 +161,7 @@ public class IngameScreen implements Screen {
 		generateSky();
 
 		entityDetector = new BruteForceEntityDetector(renderer.getRenderTargets(), street);
-		entitySpawner = new EntitySpawner(renderer, entityDetector, tweenManager);
+		entitySpawner = new EntityFactory(renderer, entityDetector, tweenManager);
 		
 		foreground = generateHouseRow(street.getY() + street.getHeight(), (int) (Gdx.graphics.getHeight() - (street.getY() + street.getHeight())));
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);

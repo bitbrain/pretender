@@ -1,4 +1,4 @@
-package de.myreality.pretender;
+package de.myreality.pretender.util;
 
 import aurelienribon.tweenengine.TweenManager;
 
@@ -6,14 +6,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
+import de.myreality.pretender.Entity;
 import de.myreality.pretender.ai.MovementBehavior;
 import de.myreality.pretender.graphics.RenderAnimationStrategy;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.TexturePool;
 import de.myreality.pretender.graphics.VillagerTextureGenerator;
-import de.myreality.pretender.util.EntityDetector;
 
-public class EntitySpawner {
+public class EntityFactory {
 	
 	public static final int TEXTURE_CAPACITY = 50;
 	
@@ -30,7 +30,7 @@ public class EntitySpawner {
 	
 	private TweenManager tweenManager;
 
-	public EntitySpawner(Renderer renderer, EntityDetector detector, TweenManager tweenManager) {
+	public EntityFactory(Renderer renderer, EntityDetector detector, TweenManager tweenManager) {
 		entityPool = Pools.get(Entity.class);
 		this.renderer = renderer;
 		this.tweenManager = tweenManager;

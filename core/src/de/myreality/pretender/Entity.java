@@ -1,5 +1,6 @@
 package de.myreality.pretender;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
@@ -31,17 +32,34 @@ public class Entity implements RenderTarget, Poolable {
 	
 	private Direction direction;
 	
+	private Color color;
+	
 	public Entity() {
 		pos = new Vector2();
 		lastPos = new Vector2();
 		offset = new Vector2();
 		reset();
+		color = new Color(1f, 1f, 1f, 1f);
 	}
 	
 	public void setBody(Rectangle rectangle) {
 		this.body = rectangle;
 	}
 	
+	/**
+	 * @return the color
+	 */
+	public Color getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 	public boolean collidesWith(Entity other) {
 		
 		float right = getX() + body.x + body.width;

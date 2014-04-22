@@ -1,6 +1,5 @@
 package de.myreality.pretender.graphics;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -50,6 +49,8 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		} else {
 			animation = idleAnimation;
 		}
+		
+		batch.setColor(entity.getColor());
 		
 		if (entity.getDirection() == Direction.RIGHT) {
 			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getOffsetX() + entity.getWidth(), entity.getY() + entity.getOffsetY(), -entity.getWidth(), entity.getHeight());
