@@ -137,7 +137,7 @@ public class IngameScreen implements Screen {
 	public void resize(int width, int height) {
 		
 		if (stage == null) {
-			stage = new IngameControls(entityKiller, renderer);
+			stage = new IngameControls(entityKiller, entityDetector);
 			Gdx.input.setInputProcessor(stage);
 		}
 		

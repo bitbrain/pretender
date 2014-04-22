@@ -2,6 +2,7 @@ package de.myreality.pretender.util;
 
 import java.util.Collection;
 
+import de.myreality.pretender.Entity;
 import de.myreality.pretender.graphics.RenderTarget;
 
 
@@ -17,7 +18,12 @@ public class BruteForceEntityDetector implements EntityDetector {
 	}
 
 	@Override
-	public boolean hasEntity(float x, float y) {
+	public boolean hasEntity(float x, float y) {		
+		return getEntity(x, y) != null;
+	}
+	
+	@Override
+	public Entity getEntity(float x, float y) {
 		
 		boolean skip = false;
 		
@@ -40,12 +46,12 @@ public class BruteForceEntityDetector implements EntityDetector {
 			boolean yCheck = entity.getY() + entity.getBody().y < y &&
 			 		          entity.getY() + entity.getBody().y + entity.getBody().height > y;
 			 		          
-			if (xCheck && yCheck) {
-				return true;
+			if (xCheck && yCheck && entity instanceof Entity) {
+				return (Entity)entity;
 			}
 		}
 		
-		return false;
+		return null;
 	}
 
 }
