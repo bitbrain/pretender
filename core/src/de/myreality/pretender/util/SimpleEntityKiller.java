@@ -15,7 +15,7 @@ public class SimpleEntityKiller implements EntityKiller {
 	
 	private TweenManager tweenManager;
 	
-	public SimpleEntityKiller(Renderer renderer, TweenManager tweenManager, Entity parent) {
+	public SimpleEntityKiller(Renderer renderer, TweenManager tweenManager) {
 		this.renderer = renderer;
 		this.tweenManager = tweenManager;
 	}
@@ -23,16 +23,20 @@ public class SimpleEntityKiller implements EntityKiller {
 	@Override
 	public void kill(final Entity entity) {
 		
+		if (tweenManager.containsTarget(entity)) {
+			return;
+		}
+		
 		// Up in the sky
-		Tween.to(entity, EntityTween.OFFSET_Y, 3.0f)
-			 .target(-50f)
-			 .ease(TweenEquations.easeInExpo)
+		Tween.to(entity, EntityTween.OFFSET_Y, 2.0f)
+			 .target(entity.getOffsetY() -150f)
+			 .ease(TweenEquations.easeInOutExpo)
 			 .start(tweenManager);
 		
 		// Reduce alpha!
-		Tween.to(entity, EntityTween.ALPHA, 3.0f)
+		Tween.to(entity, EntityTween.ALPHA, 2.0f)
 		 .target(0f)
-		 .ease(TweenEquations.easeInExpo)
+		 .ease(TweenEquations.easeInOutExpo)
 		 .setCallbackTriggers(TweenCallback.COMPLETE)
 		 .setCallback(new TweenCallback() {
 			 
@@ -43,6 +47,8 @@ public class SimpleEntityKiller implements EntityKiller {
 			
 		 })
 		 .start(tweenManager);
+		
+		entity.setDead(true);
 	}
 
 }

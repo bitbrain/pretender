@@ -34,12 +34,13 @@ public class Entity implements RenderTarget, Poolable {
 	
 	private Color color;
 	
+	private boolean dead;
+	
 	public Entity() {
 		pos = new Vector2();
 		lastPos = new Vector2();
 		offset = new Vector2();
 		reset();
-		color = new Color(1f, 1f, 1f, 1f);
 	}
 	
 	public void setBody(Rectangle rectangle) {
@@ -51,6 +52,14 @@ public class Entity implements RenderTarget, Poolable {
 	 */
 	public Color getColor() {
 		return color;
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 
 	/**
@@ -187,6 +196,8 @@ public class Entity implements RenderTarget, Poolable {
 		pos.y = 0;
 		lastPos.x = 0;
 		lastPos.y = 0;
+		offset.x = 0;
+		offset.y = 0;
 		width = 0;
 		height = 0;
 		texture = null;
@@ -194,6 +205,8 @@ public class Entity implements RenderTarget, Poolable {
 		behavior = null;
 		renderStrategy = new DefaultRenderStrategy();
 		direction = Direction.NONE;
+		color = new Color(1f, 1f, 1f, 1f);
+		dead = false;
 	}
 
 	/* (non-Javadoc)

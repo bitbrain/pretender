@@ -109,6 +109,7 @@ public class IngameScreen implements Screen {
 		batch.begin();	
 			sky.draw(batch);
 			background.draw(batch);
+			street.draw(batch, delta);
 			renderer.render(batch, delta);			
 			foreground.draw(batch);
 		batch.end();
@@ -136,7 +137,7 @@ public class IngameScreen implements Screen {
 	public void resize(int width, int height) {
 		
 		if (stage == null) {
-			stage = new IngameControls(entityKiller, street, renderer);
+			stage = new IngameControls(entityKiller, renderer);
 			Gdx.input.setInputProcessor(stage);
 		}
 		
@@ -233,7 +234,6 @@ public class IngameScreen implements Screen {
 		final float STREET_POS = 0.4f;
 		
 		street = pool.obtain();
-		renderer.add(street);
 		TextureGenerator strTexGenerator = new StreetTextureGenerator();
 		street.setTexture(strTexGenerator.create(Gdx.graphics.getWidth(), (int) (Gdx.graphics.getHeight() * STREET_HEIGHT)));
 		street.setDimensions(Gdx.graphics.getWidth(), (int) (Gdx.graphics.getHeight() * STREET_HEIGHT));

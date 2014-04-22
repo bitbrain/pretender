@@ -79,6 +79,10 @@ public class MovementBehavior implements EntityBehavior {
 				waitTime = (float) (1f + Math.random() * 4f);
 				delay = 0f;
 				
+				if (entity.isDead()) {
+					return;
+				}
+				
 				entity.setX(newPosX);
 				entity.setY(newPosY);
 				

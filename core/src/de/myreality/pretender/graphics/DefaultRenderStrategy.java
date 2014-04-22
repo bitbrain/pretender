@@ -13,6 +13,7 @@ public class DefaultRenderStrategy implements RenderStrategy {
 	@Override
 	public void render(Texture texture, Batch batch, float delta,
 			Entity entity) {
+		batch.setColor(entity.getColor());
 		batch.draw(texture, entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight());
 	}
 }
