@@ -9,7 +9,7 @@ public class EntityTween implements TweenAccessor<Entity> {
 	public static final int POS_Y = 2;
 	public static final int OFFSET_X = 3;
 	public static final int OFFSET_Y = 4;
-	
+	public static final int ALPHA = 5;
 	@Override
 	public int getValues(Entity entity, int type, float[] values) {
 		
@@ -25,6 +25,9 @@ public class EntityTween implements TweenAccessor<Entity> {
 				return 1;
 			case OFFSET_Y:
 				values[0] = entity.getOffsetY();
+				return 1;
+			case ALPHA:
+				values[0] = entity.getColor().a;
 				return 1;
 		}
 		
@@ -46,6 +49,9 @@ public class EntityTween implements TweenAccessor<Entity> {
 				break;
 			case OFFSET_Y:
 				entity.setOffset(entity.getOffsetX(), values[0]);
+				break;
+			case ALPHA:
+				entity.getColor().a = values[0];
 				break;
 		}
 	}

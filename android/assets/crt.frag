@@ -65,7 +65,7 @@ void main() {
      vec4 newColor = vec4( luminance, luminance, luminance, texColor.a);
       
     
-    if (windowColor.r > 0.9 && windowColor.g > 0.8 && windowColor.b < 0.6) 
+    if (windowColor.r > 0.8 && windowColor.g > 0.8 && windowColor.b < 0.6) 
     {
     	texColor.rgb = windowColor.rgb;
     }   

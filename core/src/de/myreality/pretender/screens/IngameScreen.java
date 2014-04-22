@@ -36,6 +36,8 @@ import de.myreality.pretender.tweens.ColorTween;
 import de.myreality.pretender.util.BruteForceEntityDetector;
 import de.myreality.pretender.util.EntityDetector;
 import de.myreality.pretender.util.EntityFactory;
+import de.myreality.pretender.util.EntityKiller;
+import de.myreality.pretender.util.SimpleEntityKiller;
 
 public class IngameScreen implements Screen {
 	
@@ -74,6 +76,8 @@ public class IngameScreen implements Screen {
 	private EntityDetector entityDetector;
 	
 	private EntityFactory entitySpawner;
+	
+	private EntityKiller entityKiller;
 	
 	FPSLogger logger = new FPSLogger();
 	
@@ -167,6 +171,8 @@ public class IngameScreen implements Screen {
 		background = generateHouseRow(street.getY() - BACKHEIGHT, BACKHEIGHT);
 		
 		crtShader = new ShaderProgram(Gdx.files.internal("crt.vert"), Gdx.files.internal("crt.frag"));
+		
+		entityKiller = new SimpleEntityKiller(renderer, tweenManager);
 		
 		System.out.println(crtShader.getLog());
 		aiHandler = new AIHandler(street, entitySpawner);

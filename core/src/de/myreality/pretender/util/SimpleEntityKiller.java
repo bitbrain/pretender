@@ -1,6 +1,8 @@
 package de.myreality.pretender.util;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import de.myreality.pretender.Entity;
@@ -19,15 +21,27 @@ public class SimpleEntityKiller implements EntityKiller {
 	}
 
 	@Override
-	public void kill(Entity entity) {
+	public void kill(final Entity entity) {
 		
+		// Up in the sky
 		Tween.to(entity, EntityTween.OFFSET_Y, 2f)
 			 .target(-50f)
 			 .ease(TweenEquations.easeInExpo)
 			 .start(tweenManager);
-		Tween.to(entity, EntityTween.OFFSET_Y, 2f)
-		 .target(-50f)
+		
+		// Reduce alpha!
+		Tween.to(entity, EntityTween.ALPHA, 2f)
+		 .target(0f)
 		 .ease(TweenEquations.easeInExpo)
+		 .setCallbackTriggers(TweenCallback.COMPLETE)
+		 .setCallback(new TweenCallback() {
+			 
+			@Override
+			public void onEvent(int arg0, BaseTween<?> arg1) {
+				renderer.remove(entity);
+			}			 
+			
+		 })
 		 .start(tweenManager);
 	}
 

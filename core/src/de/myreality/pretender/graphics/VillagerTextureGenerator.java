@@ -9,9 +9,9 @@ public class VillagerTextureGenerator implements TextureGenerator {
 	
 	private Color[] SKIN_COLORS = new Color[] {
 			
-			Color.valueOf("9898cb"),
-			Color.valueOf("bd9684"),
-			Color.valueOf("9198dc")
+			Color.valueOf("c6c5a2"),
+			Color.valueOf("ac8773"),
+			Color.valueOf("cbcaa3")
 	};
 
 	@Override
