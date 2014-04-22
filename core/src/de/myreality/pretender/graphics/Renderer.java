@@ -13,8 +13,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Pool;
 
 import de.myreality.pretender.Entity;
+import de.myreality.pretender.util.RenderTargetProvider;
 
-public class Renderer {
+public class Renderer implements RenderTargetProvider {
 	
 	private static final float SORT_INTERVAL = 0.1f;
 	
@@ -36,6 +37,7 @@ public class Renderer {
 		time = 0;
 	}
 	
+	@Override
 	public Collection<RenderTarget> getRenderTargets() {
 		return targets;
 	}

@@ -28,6 +28,7 @@ import de.myreality.pretender.Entity;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.Resources;
 import de.myreality.pretender.ai.AIHandler;
+import de.myreality.pretender.controls.IngameControls;
 import de.myreality.pretender.graphics.HouseTextureGenerator;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.graphics.StreetTextureGenerator;
@@ -135,7 +136,7 @@ public class IngameScreen implements Screen {
 	public void resize(int width, int height) {
 		
 		if (stage == null) {
-			stage = new Stage();
+			stage = new IngameControls(entityKiller, street, renderer);
 			Gdx.input.setInputProcessor(stage);
 		}
 		
