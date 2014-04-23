@@ -52,10 +52,21 @@ public class RenderAnimationStrategy implements RenderStrategy {
 		
 		batch.setColor(entity.getColor());
 		
+		float downScaleX = entity.getWidth() - (entity.getWidth() * entity.getScaleX()) / 2;
+		float downScaleY = entity.getHeight() - (entity.getHeight() * entity.getScaleY()) / 2;
+		
 		if (entity.getDirection() == Direction.RIGHT) {
-			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getOffsetX() + entity.getWidth(), entity.getY() + entity.getOffsetY(), -entity.getWidth(), entity.getHeight());
+			batch.draw(animation.getKeyFrame(time), 
+					entity.getX() + entity.getOffsetX() + entity.getWidth() + downScaleX, 
+					entity.getY() + entity.getOffsetY() + downScaleY, 
+					-(entity.getWidth() * entity.getScaleX()), 
+					entity.getHeight() * entity.getScaleY());
 		} else {
-			batch.draw(animation.getKeyFrame(time), entity.getX() + entity.getOffsetX(), entity.getY() + entity.getOffsetY(), entity.getWidth(), entity.getHeight());
+			batch.draw(animation.getKeyFrame(time), 
+					entity.getX() + entity.getOffsetX() + entity.getWidth() + downScaleX, 
+					entity.getY() + entity.getOffsetY() + downScaleY, 
+					entity.getWidth() * entity.getScaleX(), 
+					entity.getHeight() * entity.getScaleY());
 		}
 	}
 	

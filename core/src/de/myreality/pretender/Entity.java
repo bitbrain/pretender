@@ -36,6 +36,8 @@ public class Entity implements RenderTarget, Poolable {
 	
 	private boolean dead;
 	
+	private float scaleX, scaleY;
+	
 	public Entity() {
 		pos = new Vector2();
 		lastPos = new Vector2();
@@ -200,6 +202,8 @@ public class Entity implements RenderTarget, Poolable {
 		offset.y = 0;
 		width = 0;
 		height = 0;
+		scaleX = 1f;
+		scaleY = 1f;
 		texture = null;
 		body = new Rectangle();
 		behavior = null;
@@ -207,6 +211,22 @@ public class Entity implements RenderTarget, Poolable {
 		direction = Direction.NONE;
 		color = new Color(1f, 1f, 1f, 1f);
 		dead = false;
+	}
+	
+	public float getScaleX() {
+		return scaleX;
+	}
+	
+	public void setScaleX(float scale) {
+		this.scaleX = scale;
+	}
+	
+	public float getScaleY() {
+		return scaleY;
+	}
+	
+	public void setScaleY(float scale) {
+		this.scaleY = scale;
 	}
 
 	/* (non-Javadoc)

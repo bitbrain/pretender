@@ -10,6 +10,9 @@ public class EntityTween implements TweenAccessor<Entity> {
 	public static final int OFFSET_X = 3;
 	public static final int OFFSET_Y = 4;
 	public static final int ALPHA = 5;
+	public static final int SCALE_X = 6;
+	public static final int SCALE_Y = 7;
+	
 	@Override
 	public int getValues(Entity entity, int type, float[] values) {
 		
@@ -28,6 +31,12 @@ public class EntityTween implements TweenAccessor<Entity> {
 				return 1;
 			case ALPHA:
 				values[0] = entity.getColor().a;
+				return 1;
+			case SCALE_X:
+				values[0] = entity.getScaleX();
+				return 1;
+			case SCALE_Y:
+				values[0] = entity.getScaleY();
 				return 1;
 		}
 		
@@ -52,6 +61,12 @@ public class EntityTween implements TweenAccessor<Entity> {
 				break;
 			case ALPHA:
 				entity.getColor().a = values[0];
+				break;
+			case SCALE_X:
+				entity.setScaleX(values[0]);
+				break;
+			case SCALE_Y:
+				entity.setScaleY(values[0]);
 				break;
 		}
 	}

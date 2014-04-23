@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Expo;
 import de.myreality.pretender.Entity;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.tweens.EntityTween;
@@ -27,16 +28,29 @@ public class SimpleEntityKiller implements EntityKiller {
 			return;
 		}
 		
+		Expo eq = TweenEquations.easeOutExpo;
+		float time = 5f;
+		
 		// Up in the sky
-		Tween.to(entity, EntityTween.OFFSET_Y, 2.0f)
-			 .target(entity.getOffsetY() -150f)
-			 .ease(TweenEquations.easeInOutExpo)
+		Tween.to(entity, EntityTween.OFFSET_Y, time)
+			 .target(entity.getOffsetY() -200f)
+			 .ease(eq)
 			 .start(tweenManager);
 		
+		// Scale the entity
+		Tween.to(entity, EntityTween.SCALE_X, time)
+				.target(0.0f)
+				.ease(TweenEquations.easeOutQuart)
+				.start(tweenManager);
+		Tween.to(entity, EntityTween.SCALE_Y, time)
+			.target(3.5f)
+			.ease(eq)
+			.start(tweenManager);
+		
 		// Reduce alpha!
-		Tween.to(entity, EntityTween.ALPHA, 2.0f)
+		Tween.to(entity, EntityTween.ALPHA, time)
 		 .target(0f)
-		 .ease(TweenEquations.easeInOutExpo)
+		 .ease(eq)
 		 .setCallbackTriggers(TweenCallback.COMPLETE)
 		 .setCallback(new TweenCallback() {
 			 
