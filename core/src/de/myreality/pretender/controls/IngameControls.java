@@ -2,23 +2,29 @@ package de.myreality.pretender.controls;
 
 import java.util.Collection;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import de.myreality.pretender.Entity;
-import de.myreality.pretender.graphics.RenderTarget;
 import de.myreality.pretender.util.EntityDetector;
 import de.myreality.pretender.util.EntityKiller;
 
 public class IngameControls extends Stage {
+	
+	public float CURSOR_SIZE = 64;
 
 	private EntityKiller entityKiller;
 	
 	private EntityDetector entityDetector;
 	
+	private Entity cursor;
+	
 	public IngameControls(EntityKiller entityKiller, EntityDetector detector) {
 		super();
 		this.entityKiller = entityKiller;
 		this.entityDetector = detector;
+		cursor = new Entity();
+		cursor.setBody(new Rectangle(0, 0, CURSOR_SIZE, CURSOR_SIZE));
 	}
 
 	/* (non-Javadoc)
@@ -44,9 +50,14 @@ public class IngameControls extends Stage {
 	}
 
 	private void makeKill(int x, int y) {
-		Entity entity = entityDetector.getEntity(x, y);
 		
-		if (entity != null) {
+		// Apply cursor
+		cursor.getBody().x = x - CURSOR_SIZE;
+		cursor.getBody().y = y - CURSOR_SIZE;
+		
+		Collection<Entity> entities = entityDetector.getEntities(cursor);
+		
+		for (Entity entity : entities) {
 			entityKiller.kill(entity);
 		}
 	}

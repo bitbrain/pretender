@@ -43,7 +43,7 @@ public class SimpleEntityKiller implements EntityKiller {
 				.ease(TweenEquations.easeOutQuart)
 				.start(tweenManager);
 		Tween.to(entity, EntityTween.SCALE_Y, time)
-			.target(3.5f)
+			.target(1.5f)
 			.ease(eq)
 			.start(tweenManager);
 		

@@ -29,7 +29,7 @@ public class MovementBehavior implements EntityBehavior {
 		this.parent = parent;
 		this.tweenManager = tweenManager;
 		this.entityDetector = entityDetector;
-		waitTime = (float) (1f + Math.random() * 2f);
+		resetWaitTime();
 		delay = waitTime;
 		time = 0;
 	}
@@ -76,7 +76,7 @@ public class MovementBehavior implements EntityBehavior {
 			if (!entityDetector.hasEntity(newPosX + entity.getBody().getX(), newPosY + entity.getBody().getY())) {
 				
 				time = delay;
-				waitTime = (float) (1f + Math.random() * 4f);
+				resetWaitTime();
 				delay = 0f;
 				
 				if (entity.isDead()) {
@@ -89,17 +89,21 @@ public class MovementBehavior implements EntityBehavior {
 				entity.setOffset(-deltaX, -deltaY);
 				
 				if (!tweenManager.containsTarget(entity)) {
-					Tween.to(entity, EntityTween.OFFSET_X, 0.5f)
+					Tween.to(entity, EntityTween.OFFSET_X, 0.1f)
 						.target(0f)
 						.ease(TweenEquations.easeInOutCubic)
 						.start(tweenManager);
-					Tween.to(entity, EntityTween.OFFSET_Y, 0.5f)
+					Tween.to(entity, EntityTween.OFFSET_Y, 0.1f)
 					.target(0f)
 					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
 				}
 			}
 		}
+	}
+	
+	private void resetWaitTime() {
+		waitTime = (float) (0.1f + Math.random() * 0.3f);
 	}
 	
 }

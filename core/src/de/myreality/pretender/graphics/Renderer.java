@@ -17,7 +17,7 @@ import de.myreality.pretender.util.RenderTargetProvider;
 
 public class Renderer implements RenderTargetProvider {
 	
-	private static final float SORT_INTERVAL = 0.1f;
+	private static final float SORT_INTERVAL = 0.05f;
 	
 	private Queue<RenderTarget> removeQueue;
 	

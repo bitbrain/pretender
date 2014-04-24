@@ -237,11 +237,13 @@ public class Entity implements RenderTarget, Poolable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((body == null) ? 0 : body.hashCode());
-		result = prime * result
-				+ ((direction == null) ? 0 : direction.hashCode());
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + (dead ? 1231 : 1237);
 		result = prime * result + height;
 		result = prime * result + ((lastPos == null) ? 0 : lastPos.hashCode());
 		result = prime * result + ((pos == null) ? 0 : pos.hashCode());
+		result = prime * result + Float.floatToIntBits(scaleX);
+		result = prime * result + Float.floatToIntBits(scaleY);
 		result = prime * result + width;
 		return result;
 	}
@@ -263,7 +265,12 @@ public class Entity implements RenderTarget, Poolable {
 				return false;
 		} else if (!body.equals(other.body))
 			return false;
-		if (direction != other.direction)
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
+		if (dead != other.dead)
 			return false;
 		if (height != other.height)
 			return false;
@@ -277,12 +284,15 @@ public class Entity implements RenderTarget, Poolable {
 				return false;
 		} else if (!pos.equals(other.pos))
 			return false;
+		if (Float.floatToIntBits(scaleX) != Float.floatToIntBits(other.scaleX))
+			return false;
+		if (Float.floatToIntBits(scaleY) != Float.floatToIntBits(other.scaleY))
+			return false;
 		if (width != other.width)
 			return false;
 		return true;
 	}
-	
-	
+
 	
 	
 	

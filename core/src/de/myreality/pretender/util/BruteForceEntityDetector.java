@@ -1,5 +1,6 @@
 package de.myreality.pretender.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import de.myreality.pretender.Entity;
@@ -52,6 +53,25 @@ public class BruteForceEntityDetector implements EntityDetector {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Collection<Entity> getEntities(Entity area) {
+		
+		Collection<Entity> result = new ArrayList<Entity>();
+		
+		for (RenderTarget target : entities) {
+			
+			if (target instanceof Entity) {
+				
+				if (Collision.check(area, (Entity)target)) {
+					result.add((Entity)target);
+				}
+				
+			}
+		}
+		
+		return result;
 	}
 
 }
