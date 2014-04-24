@@ -36,12 +36,6 @@ public class SimpleEntityKiller implements EntityKiller {
 			 .target(entity.getOffsetY() -200f)
 			 .ease(eq)
 			 .start(tweenManager);
-		
-		// Scale the entity
-		Tween.to(entity, EntityTween.SCALE_X, time)
-				.target(0.0f)
-				.ease(TweenEquations.easeOutQuart)
-				.start(tweenManager);
 		Tween.to(entity, EntityTween.SCALE_Y, time)
 			.target(1.5f)
 			.ease(eq)
