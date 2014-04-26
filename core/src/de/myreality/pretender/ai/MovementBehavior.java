@@ -45,7 +45,7 @@ public class MovementBehavior implements EntityBehavior {
 	
 	private float determineY(Entity entity) {
 
-		float speed = 18.0f;
+		float speed = 15.0f;
 		
 		float factor = Math.random() > 0.5f ? speed : -speed;
 		float newPosY = entity.getY() + factor;
@@ -73,7 +73,9 @@ public class MovementBehavior implements EntityBehavior {
 			float deltaX = newPosX - entity.getX();
 			float deltaY = newPosY - entity.getY();
 			
-			if (!entityDetector.hasEntity(newPosX + entity.getBody().getX(), newPosY + entity.getBody().getY())) {
+			Entity other = entityDetector.getEntity(newPosX + entity.getBody().getX(), newPosY + entity.getBody().getY());
+			
+			if (other == null || other.isDead()) {
 				
 				time = delay;
 				resetWaitTime();
@@ -89,11 +91,11 @@ public class MovementBehavior implements EntityBehavior {
 				entity.setOffset(-deltaX, -deltaY);
 				
 				if (!tweenManager.containsTarget(entity)) {
-					Tween.to(entity, EntityTween.OFFSET_X, 0.1f)
+					Tween.to(entity, EntityTween.OFFSET_X, 0.3f)
 						.target(0f)
 						.ease(TweenEquations.easeInOutCubic)
 						.start(tweenManager);
-					Tween.to(entity, EntityTween.OFFSET_Y, 0.1f)
+					Tween.to(entity, EntityTween.OFFSET_Y, 0.3f)
 					.target(0f)
 					.ease(TweenEquations.easeInOutCubic)
 					.start(tweenManager);
@@ -103,7 +105,7 @@ public class MovementBehavior implements EntityBehavior {
 	}
 	
 	private void resetWaitTime() {
-		waitTime = (float) (0.1f + Math.random() * 0.3f);
+		waitTime = (float) (0.5f + Math.random() * 0.5f);
 	}
 	
 }

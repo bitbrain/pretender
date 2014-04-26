@@ -5,10 +5,10 @@ import de.myreality.pretender.util.EntityFactory;
 
 public class AIHandler {
 	
-	public static final float SPAWN_RATE = 0.5f;
+	public static final float SPAWN_RATE = 2.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
-	public static final int INITIAL_RATE = 510;
+	public static final int INITIAL_RATE = 20;
 	
 	private Entity parent;
 	
@@ -21,10 +21,10 @@ public class AIHandler {
 		this.spawner = spawner;
 		
 		int spawned = 0;
-		int tries = 1000;
+		int tries = 200;
 		
 		while (tries > 0 && spawned < INITIAL_RATE) {
-			float x = (float)(parent.getX() + parent.getWidth() / 1.5f + (parent.getWidth() / 1.5f) * Math.random());
+			float x = (float)(parent.getX() + parent.getWidth() / 2f + (parent.getWidth() / 2f) * Math.random());
 			float y = (float) (parent.getY() + parent.getHeight() * Math.random());
 	
 				if (spawner.spawnVillager(x, y, parent)) {

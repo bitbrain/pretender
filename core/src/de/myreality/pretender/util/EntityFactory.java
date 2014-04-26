@@ -17,8 +17,8 @@ public class EntityFactory {
 	
 	public static final int TEXTURE_CAPACITY = 50;
 	
-	public static final int VILLAGER_WIDTH = 25;
-	public static final int VILLAGER_HEIGHT = 32;
+	public static final int VILLAGER_WIDTH = 49;
+	public static final int VILLAGER_HEIGHT = 60;
 	
 	private Pool<Entity> entityPool;
 	

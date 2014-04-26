@@ -33,11 +33,11 @@ public class SimpleEntityKiller implements EntityKiller {
 		
 		// Up in the sky
 		Tween.to(entity, EntityTween.OFFSET_Y, time)
-			 .target(entity.getOffsetY() -200f)
+			 .target(entity.getOffsetY() -220f)
 			 .ease(eq)
 			 .start(tweenManager);
 		Tween.to(entity, EntityTween.SCALE_Y, time)
-			.target(1.5f)
+			.target(2.0f)
 			.ease(eq)
 			.start(tweenManager);
 		

@@ -102,7 +102,7 @@ public class VillagerTextureGenerator implements TextureGenerator {
 		map.fillRectangle(x, y + size - (int)(size / 2.3f), size, (int) (size / 2.3f));
 
 		map.setColor(Color.BLACK);
-		map.fillRectangle(x + 2, y + 1, 3, 3);
-		map.fillRectangle(x + size - 5, y + 1, 3, 3);
+		map.fillRectangle(x + 2, y + 2, 5, 5);
+		map.fillRectangle(x + size - 8, y + 2, 5, 5);
 	}
 }
