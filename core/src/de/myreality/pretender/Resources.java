@@ -11,4 +11,8 @@ public final class Resources {
 	
 	public static final String COLOR_NIGHT = "c038ff";
 	public static final String COLOR_DAY = "5575ff";
+	
+	public static final String MUSIC_AMBIENT = "ambient.mp3";
+	public static final String SOUND_DIE = "die.mp3";
+	public static final String SOUND_HIT = "hit.mp3";
 }

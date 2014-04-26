@@ -62,7 +62,7 @@ public class Renderer implements RenderTargetProvider {
 		
 		for (RenderTarget target : targets) {
 			
-			if (target.getX() + target.getBody().getWidth() < 0 || target.getY() + target.getBody().getHeight() < 0 ||
+			if (target.getX() + target.getBody().getWidth() * 3 < 0 || target.getY() + target.getBody().getHeight() < 0 ||
 				target.getX() > Gdx.graphics.getWidth() ||
 				target.getY() > Gdx.graphics.getHeight()) {
 				remove(target);

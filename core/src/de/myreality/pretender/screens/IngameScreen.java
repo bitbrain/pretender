@@ -6,6 +6,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import de.myreality.pretender.Entity;
 import de.myreality.pretender.PretenderGame;
 import de.myreality.pretender.Resources;
+import de.myreality.pretender.SharedAssetManager;
 import de.myreality.pretender.ai.AIHandler;
 import de.myreality.pretender.controls.IngameControls;
 import de.myreality.pretender.graphics.HouseTextureGenerator;
@@ -195,6 +197,13 @@ public class IngameScreen implements Screen {
 			 .ease(TweenEquations.easeInOutSine)
 			 .repeatYoyo(Tween.INFINITY, 0)
 			 .start(tweenManager);
+		
+		// Play the music
+		
+		Music music = SharedAssetManager.getInstance().get(Resources.MUSIC_AMBIENT, Music.class);
+		music.setLooping(true);
+		music.setVolume(0.4f);
+		music.play();
 	}
 
 	@Override

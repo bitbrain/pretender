@@ -5,7 +5,7 @@ import de.myreality.pretender.util.EntityFactory;
 
 public class AIHandler {
 	
-	public static final float SPAWN_RATE = 2.5f;
+	public static final float SPAWN_RATE = 3.5f;
 	public static final float FRAME_DURATION = 0.5f;
 	
 	public static final int INITIAL_RATE = 20;

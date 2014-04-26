@@ -6,7 +6,12 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Expo;
+
+import com.badlogic.gdx.audio.Sound;
+
 import de.myreality.pretender.Entity;
+import de.myreality.pretender.Resources;
+import de.myreality.pretender.SharedAssetManager;
 import de.myreality.pretender.graphics.Renderer;
 import de.myreality.pretender.tweens.EntityTween;
 
@@ -27,6 +32,15 @@ public class SimpleEntityKiller implements EntityKiller {
 		if (tweenManager.containsTarget(entity)) {
 			return;
 		}
+		
+
+		Sound s = SharedAssetManager.getInstance().get(Resources.SOUND_DIE, Sound.class);
+		
+		if (Math.random() < 0.1f) {
+			s.play(0.6f, (float) (1.0f + Math.random() * 1.0f), 1f);
+		}
+		s = SharedAssetManager.getInstance().get(Resources.SOUND_HIT, Sound.class);
+		s.play(0.6f, (float) (0.7f + Math.random() * 0.5f), 1f);
 		
 		Expo eq = TweenEquations.easeOutExpo;
 		float time = 5f;

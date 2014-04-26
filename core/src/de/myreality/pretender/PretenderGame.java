@@ -3,7 +3,10 @@ package de.myreality.pretender;
 import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 
 import de.myreality.pretender.screens.IngameScreen;
@@ -15,17 +18,14 @@ public class PretenderGame extends Game {
 	private AssetManager manager;
 	
 	public PretenderGame() {
-		manager = new AssetManager();
+		manager = SharedAssetManager.getInstance();
 	}
 	
 	@Override
 	public void create () {	
 		loadResources();
-		setScreen(new IngameScreen(this));
-	}
 	
-	public AssetManager getAssetManager() {
-		return manager;
+		setScreen(new IngameScreen(this));
 	}
 
 	@Override
@@ -37,5 +37,11 @@ public class PretenderGame extends Game {
 	void loadResources() {
 		Tween.registerAccessor(Entity.class, new EntityTween());
 		Tween.registerAccessor(Color.class, new ColorTween());
+		
+		manager.load(Resources.MUSIC_AMBIENT, Music.class);
+		manager.load(Resources.SOUND_DIE, Sound.class);
+		manager.load(Resources.SOUND_HIT, Sound.class);
+		
+		manager.finishLoading();
 	}
 }
